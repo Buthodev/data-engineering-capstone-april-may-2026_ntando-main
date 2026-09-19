@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer 360 Capstone Exam</title>
+<style>
+  :root {
+    --navy: #0b1f3a;
+    --navy-light: #14335c;
+    --paper: #fbfaf7;
+    --line: #d8d3c7;
+    --ink: #1c1c1c;
+    --muted: #5a5a5a;
+    --accent: #a3122e;
+    --gold: #b98b2a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #e9e6df;
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.55;
+  }
+  .sheet {
+    max-width: 860px;
+    margin: 40px auto;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: 0 2px 18px rgba(0,0,0,0.15);
+    padding: 50px 60px 60px;
+  }
+  .exam-header {
+    text-align: center;
+    border-bottom: 3px double var(--navy);
+    padding-bottom: 18px;
+    margin-bottom: 28px;
+  }
+  .exam-header .kicker {
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--accent);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  .exam-header h1 {
+    margin: 0 0 6px;
+    font-size: 30px;
+    color: var(--navy);
+  }
+  .exam-header .subtitle {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .info-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--navy);
+    margin: 26px 0 30px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .info-cell {
+    flex: 1 1 0;
+    padding: 12px 16px;
+    border-right: 1px solid var(--navy);
+    text-align: center;
+  }
+  .info-cell:last-child { border-right: none; }
+  .info-cell .label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .info-cell .value {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--navy);
+  }
+  .info-cell.due .value { color: var(--accent); }
+  h2.section {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--navy);
+    padding: 8px 14px;
+    margin: 34px 0 16px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  p { margin: 0 0 14px; }
+  .brief-box {
+    border-left: 4px solid var(--gold);
+    background: #f4f1e8;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+  }
+  .brief-box p:last-child { margin-bottom: 0; }
+  ul.tasks {
+    margin: 0 0 10px;
+    padding-left: 22px;
+  }
+  ul.tasks li { margin-bottom: 8px; }
+  table.marks {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 6px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+  table.marks th, table.marks td {
+    border: 1px solid var(--line);
+    padding: 10px 14px;
+    text-align: left;
+  }
+  table.marks th {
+    background: var(--navy-light);
+    color: #fff;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  table.marks tr:nth-child(even) td { background: #f2efe7; }
+  table.marks td.pts {
+    text-align: center;
+    font-weight: bold;
+    color: var(--navy);
+    width: 90px;
+  }
+  table.marks tr.total td {
+    border-top: 2px solid var(--navy);
+    font-weight: bold;
+    color: var(--navy);
+  }
+  table.marks tr.total td.pts { color: var(--accent); }
+  .resources {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 16px 0 6px;
+  }
+  .resource-card {
+    border: 1px solid var(--navy);
+    padding: 16px 18px;
+    background: #fff;
+  }
+  .resource-card .rtitle {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .resource-card a {
+    color: var(--navy);
+    font-weight: bold;
+    text-decoration: none;
+    word-break: break-word;
+  }
+  .resource-card a:hover { text-decoration: underline; }
+  .resource-card p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 8px 0 0;
+  }
+  ol.steps {
+    padding-left: 22px;
+    margin: 0;
+  }
+  ol.steps li { margin-bottom: 8px; }
+  .checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .checklist li {
+    padding: 8px 0 8px 30px;
+    position: relative;
+    border-bottom: 1px dashed var(--line);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 15px;
+    height: 15px;
+    border: 1.5px solid var(--navy);
+  }
+  .footer-note {
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 3px double var(--navy);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .footer-note strong { color: var(--accent); }
+  @media (max-width: 640px) {
+    .sheet { padding: 30px 22px; margin: 0; border: none; }
+    .info-bar { flex-direction: column; }
+    .info-cell { border-right: none; border-bottom: 1px solid var(--navy); }
+    .info-cell:last-child { border-bottom: none; }
+    .resources { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <div class="exam-header">
+    <div class="kicker">Data Engineering Internship &middot; Practical Assessment</div>
+    <h1>Customer 360 Capstone Exam</h1>
+    <div class="subtitle">April&ndash;May 2026 Intern Intake</div>
+  </div>
+
+  <div class="info-bar">
+    <div class="info-cell due">
+      <span class="label">Due Date</span>
+      <span class="value">27 September 2026</span>
+    </div>
+    <div class="info-cell">
+      <span class="label">Total Marks</span>
+      <span class="value">100 Points</span>
+    </div>
+    <div class="info-cell">
+      <span class="label">Format</span>
+      <span class="value">Take Home, Individual</span>
+    </div>
+    <div class="info-cell">
+      <span class="label">Tools</span>
+      <span class="value">SQL Server, SSIS</span>
+    </div>
+  </div>
+
+  <h2 class="section">What We Are Cooking</h2>
+  <div class="brief-box">
+    <p>
+      A South African retail bank has one messy flat export covering client
+      details, product enrollments, CRM contact history, and transactions,
+      all mixed into a single file. Nobody has ever built a proper warehouse
+      for it, and reporting today is a person manually pulling spreadsheets.
+    </p>
+    <p>
+      Your job is to build the first version of a Customer 360 data
+      warehouse: a star schema in SQL Server, loaded by a repeatable SSIS
+      pipeline, that a BI team could plug straight into Power BI or Tableau.
+    </p>
+  </div>
+  <p>This is a skills exam, not a memory test. You are expected to:</p>
+  <ul class="tasks">
+    <li>Profile a messy, denormalized source file and work out what is actually in it</li>
+    <li>Separate the different entities and event types hiding inside one extract, and design sensible keys for each</li>
+    <li>Design a dimensional model: grain, dimensions, facts, and how they relate</li>
+    <li>Build an SSIS package that lands, splits, and transforms the data</li>
+    <li>Write SQL against your model to answer real business questions</li>
+    <li>Explain and justify every decision you made</li>
+  </ul>
+  <p>There is no single correct schema. Two students can both pass with different, well justified designs.</p>
+
+  <h2 class="section">Marking Scheme &mdash; 100 Points</h2>
+  <table class="marks">
+    <tr><th>Criterion</th><th>What we are looking for</th><th>Points</th></tr>
+    <tr>
+      <td>Correctness</td>
+      <td>The model answers the business questions and the numbers hold up, no double counted rows from a bad join</td>
+      <td class="pts">25</td>
+    </tr>
+    <tr>
+      <td>Modelling judgment</td>
+      <td>Sensible grain and keys, dimensions and facts used correctly, design driven by profiling rather than guesswork</td>
+      <td class="pts">25</td>
+    </tr>
+    <tr>
+      <td>ETL craftsmanship</td>
+      <td>Readable SSIS packages that fail loudly on bad data and are safely re-runnable</td>
+      <td class="pts">20</td>
+    </tr>
+    <tr>
+      <td>Data quality handling</td>
+      <td>Real issues found in the file, each one handled and justified rather than deleted</td>
+      <td class="pts">15</td>
+    </tr>
+    <tr>
+      <td>Communication</td>
+      <td>Design decisions explained clearly to a non technical stakeholder</td>
+      <td class="pts">15</td>
+    </tr>
+    <tr class="total">
+      <td colspan="2">Total</td>
+      <td class="pts">100</td>
+    </tr>
+  </table>
+
+  <h2 class="section">Exam Materials</h2>
+  <div class="resources">
+    <div class="resource-card">
+      <div class="rtitle">Repository</div>
+      <a href="https://github.com/KetroSithole/data-engineering-capstone-april-may-2026" target="_blank" rel="noopener">github.com/KetroSithole/data-engineering-capstone-april-may-2026</a>
+      <p>Full brief, raw data extract, column dictionary, business questions, and starter DDL.</p>
+    </div>
+    <div class="resource-card">
+      <div class="rtitle">Project Scope</div>
+      <a href="docs/scope.docx">docs/scope.docx</a>
+      <p>Word document summary of the background, deliverables, and marking scheme.</p>
+    </div>
+  </div>
+
+  <h2 class="section">Deliverables Checklist</h2>
+  <ul class="checklist">
+    <li><code>dw</code> schema DDL for dimensions and facts, with comments explaining key design decisions</li>
+    <li>Entity relationship diagram: draw.io source file plus a PNG or PDF export</li>
+    <li>SSIS project, package files, and project file</li>
+    <li>A short data quality note describing what you found and how you handled it</li>
+    <li>SQL scripts answering every question in <code>docs/questions.md</code>, with results</li>
+    <li>A short write-up explaining how to run your pipeline end to end</li>
+  </ul>
+
+  <h2 class="section">How To Submit</h2>
+  <ol class="steps">
+    <li>Fork the repository to your own GitHub account, or create a branch if you already have write access</li>
+    <li>Clone your fork locally</li>
+    <li>Create a branch named after you, for example <code>intern/thabo-m</code></li>
+    <li>Commit as you go, in small steps, with clear messages, not one giant final commit</li>
+    <li>Push your branch</li>
+    <li>Open a pull request against <code>main</code> when ready for review, with your data quality note and a short summary of your design decisions in the description</li>
+  </ol>
+
+  <div class="footer-note">
+    No late submissions without prior arrangement. <strong>Read the full brief in the repository before you start.</strong>
+  </div>
+
+</div>
+</body>
+</html>
