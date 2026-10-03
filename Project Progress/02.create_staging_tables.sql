@@ -1,0 +1,99 @@
+--- Create staging database
+
+CREATE DATABASE stg_Customer360;
+GO
+
+--- Create staging schema
+
+CREATE SCHEMA staging;
+GO
+
+--- Create staging tables
+
+CREATE TABLE staging.customer_activity_extract (
+    client_number      VARCHAR(20),
+    first_name         VARCHAR(100),
+    last_name          VARCHAR(100),
+    email               VARCHAR(200),
+    mobile_number       VARCHAR(50),
+    date_of_birth       VARCHAR(20),   -- land as text, cast after profiling
+    gender               VARCHAR(10),
+    province             VARCHAR(100),
+    city                 VARCHAR(100),
+    signup_date          VARCHAR(20),
+    event_type           VARCHAR(30),
+    event_date           VARCHAR(20),
+    account_number       VARCHAR(20),
+    product_type         VARCHAR(50),
+    account_status       VARCHAR(20),
+    credit_limit         VARCHAR(20),
+    loan_amount          VARCHAR(20),
+    account_balance      VARCHAR(20),
+    channel               VARCHAR(50),
+    interaction_type     VARCHAR(50),
+    resolved_flag         VARCHAR(5),
+    transaction_type      VARCHAR(50),
+    amount                 VARCHAR(20)
+);
+GO
+
+--- Load raw data into staging tables
+
+USE stg_Customer360
+GO
+
+INSERT INTO staging.customer_activity_extract
+(
+    client_number,
+    first_name,
+    last_name,
+    email,
+    mobile_number,
+    date_of_birth,
+    gender,
+    province,
+    city,
+    signup_date,
+    event_type,
+    event_date,
+    account_number,
+    product_type,
+    account_status,
+    credit_limit,
+    loan_amount,
+    account_balance,
+    channel,
+    interaction_type,
+    resolved_flag,
+    transaction_type,
+    amount
+)
+SELECT
+    client_number,
+    first_name,
+    last_name,
+    email,
+    mobile_number,
+    date_of_birth,
+    gender,
+    province,
+    city,
+    signup_date,
+    event_type,
+    event_date,
+    account_number,
+    product_type,
+    account_status,
+    credit_limit,
+    loan_amount,
+    account_balance,
+    channel,
+    interaction_type,
+    resolved_flag,
+    transaction_type,
+    amount
+FROM dbo.activity_extract;
+
+SELECT *
+FROM staging.customer_activity_extract;
+
