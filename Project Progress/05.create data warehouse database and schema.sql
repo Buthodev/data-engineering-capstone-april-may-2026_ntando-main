@@ -10,3 +10,4 @@ GO
 
 CREATE SCHEMA dw;
 GO
+
