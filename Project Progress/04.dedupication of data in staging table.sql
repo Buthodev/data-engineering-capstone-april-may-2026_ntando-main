@@ -59,7 +59,7 @@ SELECT *
 FROM Duplicates
 WHERE RowNum > 1;
 
---- Client number, First Name, Last Name, Event Type and Event Date are columns that can be used to identify duplicates in the staging table.
+--- Client number, Event Type and Event Date are columns that can be used to identify duplicates in the staging table.
 --- The SQL query below will preview the duplicates based on these columns that idenifyaccurate duplicates.
 
 WITH Duplicates AS
@@ -91,15 +91,11 @@ WITH Duplicates AS
 ( 
 SELECT
 client_number,
-first_name,
-last_name,
 event_type,
 event_date,
 ROW_NUMBER() OVER (
 PARTITION BY
 client_number,
-first_name,
-last_name,
 event_type,
 event_date
 ORDER BY client_number
@@ -115,15 +111,11 @@ WITH Duplicates AS
 (
     SELECT
         client_number,
-        first_name,
-        last_name,
         event_type,
         event_date,
         ROW_NUMBER() OVER (
             PARTITION BY
                 client_number,
-                first_name,
-                last_name,
                 event_type,
                 event_date
             ORDER BY client_number

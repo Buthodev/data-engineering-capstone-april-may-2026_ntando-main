@@ -1,3 +1,4 @@
 The data quality is not the best due to key missing values and duplicates in the raw data.
 There are client whose transactions or CRM Interactions are duplicated.
 Every CRM Interaction is missing 
+Some data entries were incorrect (mispelled last names for example) which resulted in duplicated entries in the data warehouse
