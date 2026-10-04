@@ -88,6 +88,16 @@ SELECT DISTINCT
     interaction_type
 FROM stg_Customer360.staging.customer_activity_extract;
 
+--- Verify that the data has been loaded into the dimension tables
+
+SELECT * FROM dbo.dim_client;
+SELECT * FROM dbo.dim_location;
+SELECT * FROM dbo.dim_event;
+SELECT * FROM dbo.dim_flag;
+SELECT * FROM dbo.dim_channel;
+SELECT * FROM dbo.dim_account;
+SELECT * FROM dbo.dim_interaction;
+
 --- Load fact table with foreign keys from dimension tables and other relevant data
 
 INSERT INTO dbo.fact_account_activity
@@ -145,4 +155,38 @@ INNER JOIN dbo.dim_channel AS ch
     ON ch.channel = s.channel;
 GO
 
+--- Verify that the data has been loaded into the fact table
 
+SELECT TOP 100 *
+FROM dbo.fact_account_activity;
+
+--- Verify there are no duplicate records in the fact table
+
+SELECT
+    event_id,
+    location_id,
+    client_id,
+    account_id,
+    interaction_id,
+    flag_id,
+    channel_id,
+    loan_amount,
+    credit_limit,
+    amount,
+    account_balance,
+    COUNT(*) AS duplicate_count
+FROM dbo.fact_account_activity
+GROUP BY
+    event_id,
+    location_id,
+    client_id,
+    account_id,
+    interaction_id,
+    flag_id,
+    channel_id,
+    loan_amount,
+    credit_limit,
+    amount,
+    account_balance
+HAVING COUNT(*) > 1
+ORDER BY duplicate_count DESC;
