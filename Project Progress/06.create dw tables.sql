@@ -1,6 +1,6 @@
 
 
-CREATE TABLE staging.customer_activity_extract (
+CREATE TABLE dw. (
     client_number      VARCHAR(20),
     first_name         VARCHAR(100),
     last_name          VARCHAR(100),
