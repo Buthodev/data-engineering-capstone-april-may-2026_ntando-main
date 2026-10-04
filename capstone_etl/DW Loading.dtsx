@@ -1,0 +1,320 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/4/2026 9:11:30 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="OFENTSE"
+  DTS:CreatorName="AzureAD\OfentseMosiane"
+  DTS:DTSID="{3E123DAB-D39A-4305-BC88-E13584BC6EB2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="DW Loading"
+  DTS:PackageType="5"
+  DTS:VersionBuild="9"
+  DTS:VersionGUID="{F4B1C51B-95F0-4080-8A4E-796008F53EAE}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost\MSSQLSERVER01.Customer360_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{7C641430-75A9-4E36-B04D-B5144466AEDC}"
+      DTS:ObjectName="localhost\MSSQLSERVER01.Customer360_DW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=Customer360_DW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-DW Loading-{7C641430-75A9-4E36-B04D-B5144466AEDC}localhost\MSSQLSERVER01.Customer360_DW;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create DW"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9B81F5EE-995C-4084-9BB8-5A7CFACEB008}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create DW"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7C641430-75A9-4E36-B04D-B5144466AEDC}"
+          SQLTask:SqlStatementSource="IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.databases&#xA;    WHERE name = 'Customer360_DW'&#xA;)&#xA;BEGIN&#xA;    CREATE DATABASE Customer360_DW;&#xA;END;&#xA;GO&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create DW dim and fact tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F025DDC4-CA4E-4E30-839C-F5F73D3AF3CC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create DW dim and fact tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7C641430-75A9-4E36-B04D-B5144466AEDC}"
+          SQLTask:SqlStatementSource="USE Customer360_DW&#xA;GO&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'dim_client'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE dim_client (&#xA;        client_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;        client_number VARCHAR(50),&#xA;        first_name VARCHAR(100),&#xA;        last_name VARCHAR(100),&#xA;        gender VARCHAR(20),&#xA;        date_of_birth DATE,&#xA;        signup_date DATE,&#xA;        mobile_number VARCHAR(30),&#xA;        email VARCHAR(255)&#xA;    );&#xA;END;&#xA;GO&#xA;&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'dim_location'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE dim_location (&#xA;        location_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;        city VARCHAR(100),&#xA;        province VARCHAR(100)&#xA;    );&#xA;END;&#xA;GO&#xA;&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'dim_event'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE dim_event (&#xA;        event_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;        event_date DATE,&#xA;        event_type VARCHAR(100)&#xA;    );&#xA;END;&#xA;GO&#xA;&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'dim_flag'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE dim_flag (&#xA;        flag_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;        resolved_flag VARCHAR(10)&#xA;    );&#xA;END;&#xA;GO&#xA;&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'dim_channel'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE dim_channel (&#xA;        channel_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;        channel VARCHAR(100)&#xA;    );&#xA;END;&#xA;GO&#xA;&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'dim_account'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE dim_account (&#xA;        account_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;        account_number VARCHAR(50),&#xA;        product_type VARCHAR(100),&#xA;        account_status VARCHAR(50),&#xA;        transaction_type VARCHAR(100)&#xA;    );&#xA;END;&#xA;GO&#xA;&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'dim_interaction'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE dim_interaction (&#xA;        interaction_id INT IDENTITY(1,1) PRIMARY KEY,&#xA;        interaction_type VARCHAR(100)&#xA;    );&#xA;END;&#xA;GO&#xA;&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'fact_account_activity'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE fact_account_activity (&#xA;        activity_id BIGINT IDENTITY(1,1) PRIMARY KEY,&#xA;&#xA;        event_id INT,&#xA;        location_id INT,&#xA;        client_id INT,&#xA;        account_id INT,&#xA;        interaction_id INT,&#xA;        flag_id INT,&#xA;        channel_id INT,&#xA;&#xA;        loan_amount DECIMAL(18,2),&#xA;        credit_limit DECIMAL(18,2),&#xA;        amount DECIMAL(18,2),&#xA;        account_balance DECIMAL(18,2),&#xA;&#xA;        FOREIGN KEY (event_id)&#xA;            REFERENCES dim_event(event_id),&#xA;&#xA;        FOREIGN KEY (location_id)&#xA;            REFERENCES dim_location(location_id),&#xA;&#xA;        FOREIGN KEY (client_id)&#xA;            REFERENCES dim_client(client_id),&#xA;&#xA;        FOREIGN KEY (account_id)&#xA;            REFERENCES dim_account(account_id),&#xA;&#xA;        FOREIGN KEY (interaction_id)&#xA;            REFERENCES dim_interaction(interaction_id),&#xA;&#xA;        FOREIGN KEY (flag_id)&#xA;            REFERENCES dim_flag(flag_id),&#xA;&#xA;        FOREIGN KEY (channel_id)&#xA;            REFERENCES dim_channel(channel_id)&#xA;    );&#xA;END;&#xA;GO&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create DW Schema"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D7CC7E85-5BBB-4263-BA0B-04780F240649}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create DW Schema"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7C641430-75A9-4E36-B04D-B5144466AEDC}"
+          SQLTask:SqlStatementSource="USE Customer360_DW;&#xA;GO&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.schemas&#xA;    WHERE name = 'dw'&#xA;)&#xA;BEGIN&#xA;    EXEC('CREATE SCHEMA dw');&#xA;END;&#xA;GO&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load dims from staging to dw"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BC33732F-880C-4F64-8C13-805DF140D1FF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load dims from staging to dw"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7C641430-75A9-4E36-B04D-B5144466AEDC}"
+          SQLTask:SqlStatementSource="INSERT INTO dim_client (&#xA;    client_number,&#xA;    first_name,&#xA;    last_name,&#xA;    gender,&#xA;    date_of_birth,&#xA;    signup_date,&#xA;    mobile_number,&#xA;    email&#xA;)&#xA;SELECT DISTINCT&#xA;    client_number,&#xA;    first_name,&#xA;    last_name,&#xA;    gender,&#xA;    date_of_birth,&#xA;    signup_date,&#xA;    mobile_number,&#xA;    email&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_location table from staging table&#xA;&#xA;&#xA;INSERT INTO dim_location (&#xA;    city,&#xA;    province&#xA;)&#xA;SELECT DISTINCT&#xA;    city,&#xA;    province&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_event table from staging table&#xA;&#xA;INSERT INTO dim_event (&#xA;    event_date,&#xA;    event_type&#xA;)&#xA;SELECT DISTINCT&#xA;    event_date,&#xA;    event_type&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_flag table from staging table&#xA;&#xA;INSERT INTO dim_flag (&#xA;    resolved_flag&#xA;)&#xA;SELECT DISTINCT&#xA;    resolved_flag&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_channel table from staging table&#xA;&#xA;INSERT INTO dim_channel (&#xA;    channel&#xA;)&#xA;SELECT DISTINCT&#xA;    channel&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_account table from staging table&#xA;&#xA;INSERT INTO dim_account (&#xA;    account_number,&#xA;    product_type,&#xA;    account_status,&#xA;    transaction_type&#xA;)&#xA;SELECT DISTINCT&#xA;    account_number,&#xA;    product_type,&#xA;    account_status,&#xA;    transaction_type&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_interaction table from staging table&#xA;&#xA;INSERT INTO dim_interaction (&#xA;    interaction_type&#xA;)&#xA;SELECT DISTINCT&#xA;    interaction_type&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load fact into dw"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{4EF2C881-2235-406D-A03E-52BC11E97F32}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load fact into dw"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{7C641430-75A9-4E36-B04D-B5144466AEDC}"
+          SQLTask:SqlStatementSource="IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dbo.fact_account_activity&#xA;)&#xA;BEGIN&#xA;    INSERT INTO dbo.fact_account_activity&#xA;    (&#xA;        event_id,&#xA;        location_id,&#xA;        client_id,&#xA;        account_id,&#xA;        interaction_id,&#xA;        flag_id,&#xA;        channel_id,&#xA;        loan_amount,&#xA;        credit_limit,&#xA;        amount,&#xA;        account_balance&#xA;    )&#xA;    SELECT DISTINCT&#xA;        e.event_id,&#xA;        l.location_id,&#xA;        c.client_id,&#xA;        a.account_id,&#xA;        i.interaction_id,&#xA;        f.flag_id,&#xA;        ch.channel_id,&#xA;&#xA;        TRY_CONVERT(DECIMAL(18,2), s.loan_amount),&#xA;        TRY_CONVERT(DECIMAL(18,2), s.credit_limit),&#xA;        TRY_CONVERT(DECIMAL(18,2), s.amount),&#xA;        TRY_CONVERT(DECIMAL(18,2), s.account_balance)&#xA;&#xA;    FROM stg_Customer360.staging.customer_activity_extract AS s&#xA;&#xA;    INNER JOIN dbo.dim_event AS e&#xA;        ON e.event_date = TRY_CONVERT(DATE, s.event_date)&#xA;       AND e.event_type = s.event_type&#xA;&#xA;    INNER JOIN dbo.dim_location AS l&#xA;        ON l.city = s.city&#xA;       AND l.province = s.province&#xA;&#xA;    INNER JOIN dbo.dim_client AS c&#xA;        ON c.client_number = s.client_number&#xA;&#xA;    INNER JOIN dbo.dim_account AS a&#xA;        ON a.account_number = s.account_number&#xA;&#xA;    INNER JOIN dbo.dim_interaction AS i&#xA;        ON i.interaction_type = s.interaction_type&#xA;&#xA;    INNER JOIN dbo.dim_flag AS f&#xA;        ON UPPER(LTRIM(RTRIM(f.resolved_flag))) =&#xA;           UPPER(LTRIM(RTRIM(s.resolved_flag)))&#xA;&#xA;    INNER JOIN dbo.dim_channel AS ch&#xA;        ON ch.channel = s.channel;&#xA;END;&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{9F4F09B2-D573-4081-B2B1-7BAE7262C7AD}"
+      DTS:From="Package\Create DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Create DW Schema" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1E53D372-E683-4F07-B8A8-8F43F3A4B6E6}"
+      DTS:From="Package\Create DW Schema"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Create DW dim and fact tables" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{EFA70053-2CCA-4A54-8AF7-7F68307A30E6}"
+      DTS:From="Package\Create DW dim and fact tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Load dims from staging to dw" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{392704FA-66EB-4ADD-88A4-7E0E31DEE865}"
+      DTS:From="Package\Load dims from staging to dw"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Load fact into dw" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="132,42.6666666666667"
+          Id="Package\Create DW"
+          TopLeft="19.9999991059304,12.3157893384593" />
+        <NodeLayout
+          Size="174.666666666667,42.6666666666667"
+          Id="Package\Create DW Schema"
+          TopLeft="168.124992484227,74.5789465495589" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="151.99999910593,33.6491226717926">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="103.45832671163,40.9298238777663"
+              Start="0,0"
+              End="103.45832671163,33.4298238777663">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="99.4583267116301,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="99.4583267116301,0"
+                    Point2="103.45832671163,0"
+                    Point3="103.45832671163,4" />
+                  <mssgle:LineSegment
+                    End="103.45832671163,33.4298238777663" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="224,42.6666666666667"
+          Id="Package\Create DW dim and fact tables"
+          TopLeft="372.499983347953,149.842103617921" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="255.45832581756,117.245613216226">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="229.041657530392,32.5964904016956"
+              Start="0,0"
+              End="229.041657530392,25.0964904016956">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.2982452008478" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.2982452008478"
+                    Point2="0,16.2982452008478"
+                    Point3="4,16.2982452008478" />
+                  <mssgle:LineSegment
+                    End="225.041657530392,16.2982452008478" />
+                  <mssgle:CubicBezierSegment
+                    Point1="225.041657530392,16.2982452008478"
+                    Point2="229.041657530392,16.2982452008478"
+                    Point3="229.041657530392,20.2982452008478" />
+                  <mssgle:LineSegment
+                    End="229.041657530392,25.0964904016956" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="216,42.6666666666667"
+          Id="Package\Load dims from staging to dw"
+          TopLeft="537.698388661421,234.043439368428" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="484.499983347953,192.508770284588">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="161.198405313469,41.5346690838402"
+              Start="0,0"
+              End="161.198405313469,34.0346690838402">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.7673345419201" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.7673345419201"
+                    Point2="0,20.7673345419201"
+                    Point3="4,20.7673345419201" />
+                  <mssgle:LineSegment
+                    End="157.198405313469,20.7673345419201" />
+                  <mssgle:CubicBezierSegment
+                    Point1="157.198405313469,20.7673345419201"
+                    Point2="161.198405313469,20.7673345419201"
+                    Point3="161.198405313469,24.7673345419201" />
+                  <mssgle:LineSegment
+                    End="161.198405313469,34.0346690838402" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\Load fact into dw"
+          TopLeft="749.999966472388,322.947364875154" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="645.698388661421,276.710106035095">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="188.301577810967,46.2372588400596"
+              Start="0,0"
+              End="188.301577810967,38.7372588400596">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.1186294200298" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.1186294200298"
+                    Point2="0,23.1186294200298"
+                    Point3="4,23.1186294200298" />
+                  <mssgle:LineSegment
+                    End="184.301577810967,23.1186294200298" />
+                  <mssgle:CubicBezierSegment
+                    Point1="184.301577810967,23.1186294200298"
+                    Point2="188.301577810967,23.1186294200298"
+                    Point3="188.301577810967,27.1186294200298" />
+                  <mssgle:LineSegment
+                    End="188.301577810967,38.7372588400596" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

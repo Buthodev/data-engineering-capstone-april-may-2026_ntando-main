@@ -11,8 +11,8 @@
   DTS:LocaleID="7177"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="3"
-  DTS:VersionGUID="{2FF98A69-468A-4D89-A256-24FC92156AD9}">
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{ACAE2DA4-46A1-49C7-B33D-BE31AD50EB1C}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -62,7 +62,7 @@
       <GraphLayout
         Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
         <NodeLayout
-          Size="168,42.6666666666667"
+          Size="130,59.3333333333334"
           Id="Package\Deduplication of staging tables"
           TopLeft="40.624998183921,30.7894733461482" />
       </GraphLayout>
