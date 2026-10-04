@@ -1,0 +1,72 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/4/2026 1:44:23 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="OFENTSE"
+  DTS:CreatorName="AzureAD\OfentseMosiane"
+  DTS:DTSID="{D68907E7-0F70-47B6-A684-522CA52FE0D4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{2FF98A69-468A-4D89-A256-24FC92156AD9}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost\MSSQLSERVER01.stg_Customer360]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{676577EF-5B7F-418C-A2AE-40CC4E1EB1EC}"
+      DTS:ObjectName="localhost\MSSQLSERVER01.stg_Customer360">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_Customer360;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{676577EF-5B7F-418C-A2AE-40CC4E1EB1EC}localhost\MSSQLSERVER01.stg_Customer360;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Deduplication of staging tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E7056E6F-DE42-4256-BF0A-D1DF28B59B46}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Deduplication of staging tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{676577EF-5B7F-418C-A2AE-40CC4E1EB1EC}"
+          SQLTask:SqlStatementSource="WITH Duplicates AS&#xA;( &#xA;SELECT&#xA;client_number,&#xA;first_name,&#xA;last_name,&#xA;event_type,&#xA;event_date,&#xA;ROW_NUMBER() OVER (&#xA;PARTITION BY&#xA;client_number,&#xA;first_name,&#xA;last_name,&#xA;event_type,&#xA;event_date&#xA;ORDER BY client_number&#xA;) AS RowNum&#xA;FROM staging.customer_activity_extract&#xA;)&#xA;DELETE FROM Duplicates&#xA;WHERE RowNum &gt; 1;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\Deduplication of staging tables"
+          TopLeft="40.624998183921,30.7894733461482" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

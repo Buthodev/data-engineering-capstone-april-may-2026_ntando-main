@@ -1,0 +1,332 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/3/2026 4:21:40 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="OFENTSE"
+  DTS:CreatorName="AzureAD\OfentseMosiane"
+  DTS:DTSID="{C355F4B4-C5B8-47AE-A391-C54A487238E9}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Staging Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{277A4DBC-AA57-43DE-B718-75D5829E1032}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost\MSSQLSERVER01.stg_Customer360]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3722A324-55C9-455B-B9FA-E9E3397D8A93}"
+      DTS:ObjectName="localhost\MSSQLSERVER01.stg_Customer360">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_Customer360;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{3722A324-55C9-455B-B9FA-E9E3397D8A93}localhost\MSSQLSERVER01.stg_Customer360;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost\MSSQLSERVER01.stg_hospital_admissions]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{85A80E93-46CC-4907-AA88-3901651B57B3}"
+      DTS:ObjectName="localhost\MSSQLSERVER01.stg_hospital_admissions">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_hospital_admissions;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{85A80E93-46CC-4907-AA88-3901651B57B3}localhost\MSSQLSERVER01.stg_hospital_admissions;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Create staging schema"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2CAF13E2-7108-4ADA-9CF0-C7F691D078FC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create staging schema"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3722A324-55C9-455B-B9FA-E9E3397D8A93}"
+          SQLTask:SqlStatementSource="USE stg_Customer360;&#xA;GO&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.schemas&#xA;    WHERE name = 'staging'&#xA;)&#xA;BEGIN&#xA;    EXEC('CREATE SCHEMA staging');&#xA;END;&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create staging tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{A53CBC2F-55DA-4BBE-A186-859093BFC573}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create staging tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3722A324-55C9-455B-B9FA-E9E3397D8A93}"
+          SQLTask:SqlStatementSource="USE stg_Customer360;&#xA;GO&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables t&#xA;    INNER JOIN sys.schemas s&#xA;        ON t.schema_id = s.schema_id&#xA;    WHERE t.name = 'customer_activity_extract'&#xA;      AND s.name = 'staging'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE staging.customer_activity_extract (&#xA;        client_number      VARCHAR(20),&#xA;        first_name         VARCHAR(100),&#xA;        last_name          VARCHAR(100),&#xA;        email              VARCHAR(200),&#xA;        mobile_number      VARCHAR(50),&#xA;        date_of_birth      VARCHAR(20),  &#xA;        gender             VARCHAR(10),&#xA;        province            VARCHAR(100),&#xA;        city               VARCHAR(100),&#xA;        signup_date        VARCHAR(20),&#xA;        event_type         VARCHAR(30),&#xA;        event_date         VARCHAR(20),&#xA;        account_number     VARCHAR(20),&#xA;        product_type       VARCHAR(50),&#xA;        account_status     VARCHAR(20),&#xA;        credit_limit       VARCHAR(20),&#xA;        loan_amount        VARCHAR(20),&#xA;        account_balance    VARCHAR(20),&#xA;        channel            VARCHAR(50),&#xA;        interaction_type   VARCHAR(50),&#xA;        resolved_flag      VARCHAR(5),&#xA;        transaction_type   VARCHAR(50),&#xA;        amount             VARCHAR(20)&#xA;    );&#xA;END;&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Create stg_Customer360 Database"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FECFAEB3-8681-4846-8554-5BF1E472DCC7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Create stg_Customer360 Database"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3722A324-55C9-455B-B9FA-E9E3397D8A93}"
+          SQLTask:SqlStatementSource="IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.databases&#xA;    WHERE name = 'stg_Customer360'&#xA;)&#xA;BEGIN&#xA;    CREATE DATABASE stg_Customer360;&#xA;END;&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load raw data into staging tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{942B5298-5022-4759-8E04-61AE1B34B003}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load raw data into staging tables"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3722A324-55C9-455B-B9FA-E9E3397D8A93}"
+          SQLTask:SqlStatementSource="USE stg_Customer360;&#xA;GO&#xA;&#xA;INSERT INTO staging.customer_activity_extract&#xA;(&#xA;    client_number,&#xA;    first_name,&#xA;    last_name,&#xA;    email,&#xA;    mobile_number,&#xA;    date_of_birth,&#xA;    gender,&#xA;    province,&#xA;    city,&#xA;    signup_date,&#xA;    event_type,&#xA;    event_date,&#xA;    account_number,&#xA;    product_type,&#xA;    account_status,&#xA;    credit_limit,&#xA;    loan_amount,&#xA;    account_balance,&#xA;    channel,&#xA;    interaction_type,&#xA;    resolved_flag,&#xA;    transaction_type,&#xA;    amount&#xA;)&#xA;SELECT&#xA;    s.client_number,&#xA;    s.first_name,&#xA;    s.last_name,&#xA;    s.email,&#xA;    s.mobile_number,&#xA;    s.date_of_birth,&#xA;    s.gender,&#xA;    s.province,&#xA;    s.city,&#xA;    s.signup_date,&#xA;    s.event_type,&#xA;    s.event_date,&#xA;    s.account_number,&#xA;    s.product_type,&#xA;    s.account_status,&#xA;    s.credit_limit,&#xA;    s.loan_amount,&#xA;    s.account_balance,&#xA;    s.channel,&#xA;    s.interaction_type,&#xA;    s.resolved_flag,&#xA;    s.transaction_type,&#xA;    s.amount&#xA;FROM dbo.activity_extract AS s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM staging.customer_activity_extract AS t&#xA;    WHERE ISNULL(t.client_number, '') = ISNULL(s.client_number, '')&#xA;      AND ISNULL(t.first_name, '') = ISNULL(s.first_name, '')&#xA;      AND ISNULL(t.last_name, '') = ISNULL(s.last_name, '')&#xA;      AND ISNULL(t.email, '') = ISNULL(s.email, '')&#xA;      AND ISNULL(t.mobile_number, '') = ISNULL(s.mobile_number, '')&#xA;      AND ISNULL(t.date_of_birth, '') = ISNULL(s.date_of_birth, '')&#xA;      AND ISNULL(t.gender, '') = ISNULL(s.gender, '')&#xA;      AND ISNULL(t.province, '') = ISNULL(s.province, '')&#xA;      AND ISNULL(t.city, '') = ISNULL(s.city, '')&#xA;      AND ISNULL(t.signup_date, '') = ISNULL(s.signup_date, '')&#xA;      AND ISNULL(t.event_type, '') = ISNULL(s.event_type, '')&#xA;      AND ISNULL(t.event_date, '') = ISNULL(s.event_date, '')&#xA;      AND ISNULL(t.account_number, '') = ISNULL(s.account_number, '')&#xA;      AND ISNULL(t.product_type, '') = ISNULL(s.product_type, '')&#xA;      AND ISNULL(t.account_status, '') = ISNULL(s.account_status, '')&#xA;      AND ISNULL(t.credit_limit, '') = ISNULL(s.credit_limit, '')&#xA;      AND ISNULL(t.loan_amount, '') = ISNULL(s.loan_amount, '')&#xA;      AND ISNULL(t.account_balance, '') = ISNULL(s.account_balance, '')&#xA;      AND ISNULL(t.channel, '') = ISNULL(s.channel, '')&#xA;      AND ISNULL(t.interaction_type, '') = ISNULL(s.interaction_type, '')&#xA;      AND ISNULL(t.resolved_flag, '') = ISNULL(s.resolved_flag, '')&#xA;      AND ISNULL(t.transaction_type, '') = ISNULL(s.transaction_type, '')&#xA;      AND ISNULL(t.amount, '') = ISNULL(s.amount, '')&#xA;);&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Standardise column formatting"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{75925C2B-CBD9-400A-95F2-8E48D6E0399E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Standardise column formatting"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2025; © 2025 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3722A324-55C9-455B-B9FA-E9E3397D8A93}"
+          SQLTask:SqlStatementSource="USE stg_Customer360;&#xA;GO&#xA;&#xA;-- Standardise client number&#xA;UPDATE staging.customer_activity_extract&#xA;SET client_number = UPPER(LTRIM(RTRIM(client_number)))&#xA;WHERE client_number &lt;&gt; UPPER(LTRIM(RTRIM(client_number)))&#xA;   OR client_number IS NULL;&#xA;GO&#xA;&#xA;&#xA;-- Standardise first name&#xA;UPDATE staging.customer_activity_extract&#xA;SET first_name =&#xA;    UPPER(LEFT(LTRIM(RTRIM(first_name)), 1))&#xA;    + LOWER(SUBSTRING(&#xA;        LTRIM(RTRIM(first_name)),&#xA;        2,&#xA;        LEN(LTRIM(RTRIM(first_name)))&#xA;    ))&#xA;WHERE first_name &lt;&gt; (&#xA;    UPPER(LEFT(LTRIM(RTRIM(first_name)), 1))&#xA;    + LOWER(SUBSTRING(&#xA;        LTRIM(RTRIM(first_name)),&#xA;        2,&#xA;        LEN(LTRIM(RTRIM(first_name)))&#xA;    ))&#xA;)&#xA;OR first_name IS NULL;&#xA;GO&#xA;&#xA;&#xA;-- Standardise last name&#xA;UPDATE staging.customer_activity_extract&#xA;SET last_name =&#xA;    UPPER(LEFT(LTRIM(RTRIM(last_name)), 1))&#xA;    + LOWER(SUBSTRING(&#xA;        LTRIM(RTRIM(last_name)),&#xA;        2,&#xA;        LEN(LTRIM(RTRIM(last_name)))&#xA;    ))&#xA;WHERE last_name &lt;&gt; (&#xA;    UPPER(LEFT(LTRIM(RTRIM(last_name)), 1))&#xA;    + LOWER(SUBSTRING(&#xA;        LTRIM(RTRIM(last_name)),&#xA;        2,&#xA;        LEN(LTRIM(RTRIM(last_name)))&#xA;    ))&#xA;)&#xA;OR last_name IS NULL;&#xA;GO&#xA;&#xA;&#xA;-- Standardise email&#xA;UPDATE staging.customer_activity_extract&#xA;SET email = LOWER(LTRIM(RTRIM(email)))&#xA;WHERE email &lt;&gt; LOWER(LTRIM(RTRIM(email)))&#xA;   OR email IS NULL;&#xA;GO&#xA;&#xA;&#xA;-- Standardise mobile number&#xA;UPDATE staging.customer_activity_extract&#xA;SET mobile_number =&#xA;    CASE&#xA;        WHEN LEFT(&#xA;            REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(&#xA;                mobile_number,&#xA;                ' ', ''), '-', ''), '(', ''), ')', ''), '+', ''),&#xA;            2&#xA;        ) = '27'&#xA;        THEN '0' + SUBSTRING(&#xA;            REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(&#xA;                mobile_number,&#xA;                ' ', ''), '-', ''), '(', ''), ')', ''), '+', ''),&#xA;            3,&#xA;            20&#xA;        )&#xA;&#xA;        ELSE REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(&#xA;            mobile_number,&#xA;            ' ', ''), '-', ''), '(', ''), ')', ''), '+', '')&#xA;    END&#xA;WHERE mobile_number IS NOT NULL;&#xA;GO&#xA;&#xA;&#xA;-- Standardise gender&#xA;UPDATE staging.customer_activity_extract&#xA;SET gender =&#xA;    CASE&#xA;        WHEN UPPER(LTRIM(RTRIM(gender))) IN ('M', 'MALE')&#xA;            THEN 'Male'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(gender))) IN ('F', 'FEMALE')&#xA;            THEN 'Female'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(gender))) IN ('O', 'OTHER')&#xA;            THEN 'Other'&#xA;&#xA;        WHEN gender IS NULL&#xA;            OR LTRIM(RTRIM(gender)) = ''&#xA;            THEN 'Unknown'&#xA;&#xA;        ELSE 'Unknown'&#xA;    END&#xA;WHERE gender IS NULL&#xA;   OR LTRIM(RTRIM(gender)) = ''&#xA;   OR UPPER(LTRIM(RTRIM(gender))) NOT IN&#xA;      ('M', 'MALE', 'F', 'FEMALE', 'O', 'OTHER')&#xA;   OR gender NOT IN ('Male', 'Female', 'Other', 'Unknown');&#xA;GO&#xA;&#xA;&#xA;-- Standardise province&#xA;UPDATE staging.customer_activity_extract&#xA;SET province =&#xA;    CASE&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('GAUTENG', 'GAUTENG PROVINCE')&#xA;            THEN 'Gauteng'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('WESTERN CAPE', 'WESTERN CAPE PROVINCE')&#xA;            THEN 'Western Cape'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('KWAZULU-NATAL', 'KWAZULU NATAL', 'KZN')&#xA;            THEN 'KwaZulu-Natal'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('EASTERN CAPE', 'EASTERN CAPE PROVINCE')&#xA;            THEN 'Eastern Cape'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('FREE STATE', 'FREE STATE PROVINCE')&#xA;            THEN 'Free State'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('LIMPOPO', 'LIMPOPO PROVINCE')&#xA;            THEN 'Limpopo'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('MPUMALANGA', 'MPUMALANGA PROVINCE')&#xA;            THEN 'Mpumalanga'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('NORTH WEST', 'NORTH WEST PROVINCE', 'NORTHWEST')&#xA;            THEN 'North West'&#xA;&#xA;        WHEN UPPER(LTRIM(RTRIM(province))) IN&#xA;            ('NORTHERN CAPE', 'NORTHERN CAPE PROVINCE')&#xA;            THEN 'Northern Cape'&#xA;&#xA;        WHEN province IS NULL&#xA;            OR LTRIM(RTRIM(province)) = ''&#xA;            THEN 'Unknown'&#xA;&#xA;        ELSE 'Unknown'&#xA;    END&#xA;WHERE province IS NULL&#xA;   OR LTRIM(RTRIM(province)) = ''&#xA;   OR UPPER(LTRIM(RTRIM(province))) NOT IN&#xA;      (&#xA;          'GAUTENG',&#xA;          'GAUTENG PROVINCE',&#xA;          'WESTERN CAPE',&#xA;          'WESTERN CAPE PROVINCE',&#xA;          'KWAZULU-NATAL',&#xA;          'KWAZULU NATAL',&#xA;          'KZN',&#xA;          'EASTERN CAPE',&#xA;          'EASTERN CAPE PROVINCE',&#xA;          'FREE STATE',&#xA;          'FREE STATE PROVINCE',&#xA;          'LIMPOPO',&#xA;          'LIMPOPO PROVINCE',&#xA;          'MPUMALANGA',&#xA;          'MPUMALANGA PROVINCE',&#xA;          'NORTH WEST',&#xA;          'NORTH WEST PROVINCE',&#xA;          'NORTHWEST',&#xA;          'NORTHERN CAPE',&#xA;          'NORTHERN CAPE PROVINCE'&#xA;      )&#xA;   OR province NOT IN&#xA;      (&#xA;          'Gauteng',&#xA;          'Western Cape',&#xA;          'KwaZulu-Natal',&#xA;          'Eastern Cape',&#xA;          'Free State',&#xA;          'Limpopo',&#xA;          'Mpumalanga',&#xA;          'North West',&#xA;          'Northern Cape',&#xA;          'Unknown'&#xA;      );&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{193540FC-278E-443C-A814-D41A867815BD}"
+      DTS:From="Package\Create stg_Customer360 Database"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Create staging schema" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{37FF477D-09D4-4FE3-8309-D4CCA98F69FA}"
+      DTS:From="Package\Create staging schema"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Create staging tables" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{52DD4985-E59E-481D-9CD3-B7974F38E3BF}"
+      DTS:From="Package\Create staging tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Load raw data into staging tables" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{91216D54-64D9-4766-AD62-3223859799F2}"
+      DTS:From="Package\Load raw data into staging tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Standardise column formatting" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="246.666666666667,42.6666666666667"
+          Id="Package\Create stg_Customer360 Database"
+          TopLeft="94.3749957811089,45.8421047598206" />
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\Create staging schema"
+          TopLeft="160.156242840458,130.85526172113" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="217.708329114442,88.5087714264873">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="26.4479137260157,42.3464902946425"
+              Start="0,0"
+              End="26.4479137260157,34.8464902946425">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.1732451473213" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.1732451473213"
+                    Point2="0,21.1732451473213"
+                    Point3="4,21.1732451473213" />
+                  <mssgle:LineSegment
+                    End="22.4479137260157,21.1732451473213" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.4479137260157,21.1732451473213"
+                    Point2="26.4479137260157,21.1732451473213"
+                    Point3="26.4479137260157,25.1732451473213" />
+                  <mssgle:LineSegment
+                    End="26.4479137260157,34.8464902946425" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="180,42.6666666666667"
+          Id="Package\Create staging tables"
+          TopLeft="171.093742351514,217.903506386712" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="244.156242840458,173.521928387796">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="16.9374995110556,44.3815779989157"
+              Start="0,0"
+              End="16.9374995110556,36.8815779989157">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.1907889994579" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.1907889994579"
+                    Point2="0,22.1907889994579"
+                    Point3="4,22.1907889994579" />
+                  <mssgle:LineSegment
+                    End="12.9374995110556,22.1907889994579" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.9374995110556,22.1907889994579"
+                    Point2="16.9374995110556,22.1907889994579"
+                    Point3="16.9374995110556,26.1907889994579" />
+                  <mssgle:LineSegment
+                    End="16.9374995110556,36.8815779989157" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="236,42.6666666666667"
+          Id="Package\Load raw data into staging tables"
+          TopLeft="352.343734249007,272.478068043768" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="351.093742351514,239.236839720046">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="119.249991897494,33.2412283237222"
+              Start="0,0"
+              End="119.249991897494,25.7412283237222">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="115.249991897494,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="115.249991897494,0"
+                    Point2="119.249991897494,0"
+                    Point3="119.249991897494,4" />
+                  <mssgle:LineSegment
+                    End="119.249991897494,25.7412283237222" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="224,42.6666666666667"
+          Id="Package\Standardise column formatting"
+          TopLeft="554.218725224492,343.644733068954" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="470.343734249007,315.144734710434">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="195.874990975485,28.4999983585195"
+              Start="0,0"
+              End="195.874990975485,20.9999983585195">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.2499991792597" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.2499991792597"
+                    Point2="0,14.2499991792597"
+                    Point3="4,14.2499991792597" />
+                  <mssgle:LineSegment
+                    End="191.874990975485,14.2499991792597" />
+                  <mssgle:CubicBezierSegment
+                    Point1="191.874990975485,14.2499991792597"
+                    Point2="195.874990975485,14.2499991792597"
+                    Point3="195.874990975485,18.2499991792597" />
+                  <mssgle:LineSegment
+                    End="195.874990975485,20.9999983585195" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

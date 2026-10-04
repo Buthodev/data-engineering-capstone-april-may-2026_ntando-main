@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="capstone_project_etl.sqlproj">
+    <Build />
+    <Deploy />
+  </Project>
+</Solution>
