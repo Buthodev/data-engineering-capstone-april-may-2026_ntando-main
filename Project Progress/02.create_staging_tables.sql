@@ -94,6 +94,7 @@ SELECT
     amount
 FROM dbo.activity_extract;
 
-SELECT *
-FROM staging.customer_activity_extract;
+--- Verify data has been loaded into staging tables
 
+SELECT *
+FROM staging.customer_activity_extract; --- Screenshot attached 
