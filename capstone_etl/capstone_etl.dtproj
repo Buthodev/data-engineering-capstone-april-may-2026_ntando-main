@@ -26,13 +26,14 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">OFENTSE</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAlaBviKcWy0SyRBWQXVn5WQAAAAACAAAAAAAQZgAAAAEAACAAAAArvZds8M2l+BAeA9uEs6uQvySvWMvjogFIEMWwt3fKLQAAAAAOgAAAAAIAACAAAABA1txTjeoezhbI5oz+Us/9RhhStRP2XOdmkGY8Ciga7ZAAAABgOG0ePIogQZ73eePrzZdzTgMp0voTKEEbCGeDlaoNcw0mM5b6EZQrINRVM5+ZbTH4TyMeyxv0y5xa2SDDlH9injHZ9i0kUEqo+XAnRk/KUjRKTejjZM67f+aM42pmuIB5XGKIjiCRU95JyUof1UHPJ3Ru3zya91YtlWR2WfJQQVEb6KhO6GK33Nrdm96Ama1AAAAAyKDNs0l3uiWDsgpE43BlxsJLx7eHiufLRDF72hbydIY5UX6rGFHgrSzbrbkU7iFDbNDgOF6ighaWWlYqdzxREg==</SSIS:Property>
+          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAlaBviKcWy0SyRBWQXVn5WQAAAAACAAAAAAAQZgAAAAEAACAAAAAgY/8U4o9Wl1oJJR+g+GHfxd4+OkkTgDwjh4gCHruLXgAAAAAOgAAAAAIAACAAAABjBUJIiAe2EQvFaKkMjFXU22FYTDvt19mauHzsfpAOOpAAAAD9lQwNnSS+KLogADvE1TfgwfIK8A0GlfP1VsHNXo8n3lXQXYREm3/lBWICiKWg4aOhxh67CRNPLhaBXL9C5DCs4oJ1qLD1dZij1U3Wk4CYFewBNumOxjXfGkG6e2SLxwmCd4oJuyEuu3J9FFnFMjrucHWoiX1WJp9YIhg29W+z91aw0SWfSOX/IN42/LYMsZJAAAAAHC4dE0j53XA892NIRXZJsfnLuuutxcp1cBhgXlR2gmogA9AxkVI9+ppbLnysIQBrKXHhc4WwckzPDBen7enGng==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
           <SSIS:Package SSIS:Name="Staging Package.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="Dedup and Clean.dtsx" SSIS:EntryPoint="1" />
           <SSIS:Package SSIS:Name="DW Loading.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="Master Package.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers />
         <SSIS:DeploymentInfo>
@@ -44,10 +45,10 @@
                 <SSIS:Property SSIS:Name="Name">Staging Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">12</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">13</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{277A4DBC-AA57-43DE-B718-75D5829E1032}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{87278E58-119A-4A81-998B-D83204A8A0C2}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -189,154 +190,6 @@
                   </SSIS:Properties>
                 </SSIS:Parameter>
                 <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.UserName">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.ConnectByProxy">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.ConnectionString">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_hospital_admissions;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{85A80E93-46CC-4907-AA88-3901651B57B3}localhost\MSSQLSERVER01.stg_hospital_admissions;Auto Translate=False;</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.ConnectRetryCount">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">1</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.ConnectRetryInterval">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">5</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.ConnectUsingManagedIdentity">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.InitialCatalog">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">stg_hospital_admissions</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.Password">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">1</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.RetainSameConnection">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.ServerName">
-                  <SSIS:Properties>
-                    <SSIS:Property SSIS:Name="ID">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="CreationName">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="Description">
-                    </SSIS:Property>
-                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                    <SSIS:Property SSIS:Name="Value">localhost\MSSQLSERVER01</SSIS:Property>
-                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
-                  </SSIS:Properties>
-                </SSIS:Parameter>
-                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_hospital_admissions.UserName">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>
@@ -524,10 +377,10 @@
                 <SSIS:Property SSIS:Name="Name">DW Loading</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">9</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{684685D1-A538-46CD-B227-FB28EFC575DF}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{F4B1C51B-95F0-4080-8A4E-796008F53EAE}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
@@ -669,6 +522,320 @@
                   </SSIS:Properties>
                 </SSIS:Parameter>
                 <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.UserName">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+              </SSIS:Parameters>
+            </SSIS:PackageMetaData>
+            <SSIS:PackageMetaData SSIS:Name="Master Package.dtsx">
+              <SSIS:Properties>
+                <SSIS:Property SSIS:Name="ID">{CDB1A597-1551-4F85-8969-0AD418DF4C9E}</SSIS:Property>
+                <SSIS:Property SSIS:Name="Name">Package1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">4</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionComments">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{04D57CCF-2640-4413-A71E-88D60B54D376}</SSIS:Property>
+                <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
+                <SSIS:Property SSIS:Name="Description">
+                </SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+              </SSIS:Properties>
+              <SSIS:Parameters>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.ConnectByProxy">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.ConnectionString">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">Data Source=localhost\MSSQLSERVER01;Initial Catalog=Customer360_DW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{E04A9332-25C7-4667-8460-DE386951B8AE}localhost\MSSQLSERVER01.Customer360_DW;Auto Translate=False;</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.ConnectRetryCount">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">1</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.ConnectRetryInterval">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">5</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.ConnectUsingManagedIdentity">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.InitialCatalog">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">Customer360_DW</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.Password">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">1</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.RetainSameConnection">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.ServerName">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">localhost\MSSQLSERVER01</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.Customer360_DW.UserName">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.ConnectByProxy">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.ConnectionString">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_Customer360;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{1F10D955-BD60-4214-84B7-20413FA5260B}localhost\MSSQLSERVER01.stg_Customer360;Auto Translate=False;</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.ConnectRetryCount">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">1</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.ConnectRetryInterval">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">5</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.ConnectUsingManagedIdentity">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.InitialCatalog">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">stg_Customer360</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.Password">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">1</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.RetainSameConnection">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">false</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.ServerName">
+                  <SSIS:Properties>
+                    <SSIS:Property SSIS:Name="ID">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="CreationName">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="Description">
+                    </SSIS:Property>
+                    <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
+                    <SSIS:Property SSIS:Name="Value">localhost\MSSQLSERVER01</SSIS:Property>
+                    <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
+                  </SSIS:Properties>
+                </SSIS:Parameter>
+                <SSIS:Parameter SSIS:Name="CM.localhost\MSSQLSERVER01.stg_Customer360.UserName">
                   <SSIS:Properties>
                     <SSIS:Property SSIS:Name="ID">
                     </SSIS:Property>

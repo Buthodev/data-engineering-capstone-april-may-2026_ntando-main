@@ -1,0 +1,212 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/4/2026 9:44:10 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="OFENTSE"
+  DTS:CreatorName="AzureAD\OfentseMosiane"
+  DTS:DTSID="{CDB1A597-1551-4F85-8969-0AD418DF4C9E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="17.0.1016.0"
+  DTS:LocaleID="7177"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{04D57CCF-2640-4413-A71E-88D60B54D376}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost\MSSQLSERVER01.Customer360_DW]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E04A9332-25C7-4667-8460-DE386951B8AE}"
+      DTS:ObjectName="localhost\MSSQLSERVER01.Customer360_DW">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=Customer360_DW;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{E04A9332-25C7-4667-8460-DE386951B8AE}localhost\MSSQLSERVER01.Customer360_DW;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost\MSSQLSERVER01.stg_Customer360]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1F10D955-BD60-4214-84B7-20413FA5260B}"
+      DTS:ObjectName="localhost\MSSQLSERVER01.stg_Customer360">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_Customer360;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{1F10D955-BD60-4214-84B7-20413FA5260B}localhost\MSSQLSERVER01.stg_Customer360;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Dedup and Clean Package (Silver Layer)"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{A64EE23A-C774-4356-926A-9E2E8053A71F}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Dedup and Clean Package (Silver Layer)"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Dedup and Clean.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DW Package (Gold Layer)"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{EDABBA5C-473A-4C32-AC73-E09C013835FD}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DW Package (Gold Layer)"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>DW Loading.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Staging Package (Bronze Layer)"
+      DTS:CreationName="Microsoft.ExecutePackageTask"
+      DTS:Description="Execute Package Task"
+      DTS:DTSID="{02795D2B-ACCC-4C51-A3AA-4D86A7D14DD8}"
+      DTS:ExecutableType="Microsoft.ExecutePackageTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Staging Package (Bronze Layer)"
+      DTS:TaskContact="Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <ExecutePackageTask>
+          <UseProjectReference>True</UseProjectReference>
+          <PackageName>Staging Package.dtsx</PackageName>
+        </ExecutePackageTask>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{25A018E1-990F-4932-B2F6-BAD93D612FB6}"
+      DTS:From="Package\Staging Package (Bronze Layer)"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Dedup and Clean Package (Silver Layer)" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{2E061C50-BE02-4FEB-8ED0-CB84E90279BC}"
+      DTS:From="Package\Dedup and Clean Package (Silver Layer)"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DW Package (Gold Layer)" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="273.333333333334,42.6666666666667"
+          Id="Package\Dedup and Clean Package (Silver Layer)"
+          TopLeft="205.624990807847,116.31578819656" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\DW Package (Gold Layer)"
+          TopLeft="430.624980749563,190.245612217064" />
+        <NodeLayout
+          Size="188,42.6666666666667"
+          Id="Package\Staging Package (Bronze Layer)"
+          TopLeft="53.7499975971878,36.9473680153778" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="147.749997597188,79.6140346820445">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="151.874993210659,36.7017535145153"
+              Start="0,0"
+              End="151.874993210659,29.2017535145153">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.3508767572577" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.3508767572577"
+                    Point2="0,18.3508767572577"
+                    Point3="4,18.3508767572577" />
+                  <mssgle:LineSegment
+                    End="147.874993210659,18.3508767572577" />
+                  <mssgle:CubicBezierSegment
+                    Point1="147.874993210659,18.3508767572577"
+                    Point2="151.874993210659,18.3508767572577"
+                    Point3="151.874993210659,22.3508767572577" />
+                  <mssgle:LineSegment
+                    End="151.874993210659,29.2017535145153" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="342.291657474513,158.982454863227">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="182.33332327505,31.2631573538371"
+              Start="0,0"
+              End="182.33332327505,23.7631573538371">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.6315786769185" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.6315786769185"
+                    Point2="0,15.6315786769185"
+                    Point3="4,15.6315786769185" />
+                  <mssgle:LineSegment
+                    End="178.33332327505,15.6315786769185" />
+                  <mssgle:CubicBezierSegment
+                    Point1="178.33332327505,15.6315786769185"
+                    Point2="182.33332327505,15.6315786769185"
+                    Point3="182.33332327505,19.6315786769185" />
+                  <mssgle:LineSegment
+                    End="182.33332327505,23.7631573538371" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

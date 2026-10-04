@@ -11,8 +11,8 @@
   DTS:LocaleID="7177"
   DTS:ObjectName="Staging Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="12"
-  DTS:VersionGUID="{277A4DBC-AA57-43DE-B718-75D5829E1032}">
+  DTS:VersionBuild="13"
+  DTS:VersionGUID="{87278E58-119A-4A81-998B-D83204A8A0C2}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,18 +26,6 @@
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
           DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_Customer360;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{3722A324-55C9-455B-B9FA-E9E3397D8A93}localhost\MSSQLSERVER01.stg_Customer360;" />
-      </DTS:ObjectData>
-    </DTS:ConnectionManager>
-    <DTS:ConnectionManager
-      DTS:refId="Package.ConnectionManagers[localhost\MSSQLSERVER01.stg_hospital_admissions]"
-      DTS:CreationName="OLEDB"
-      DTS:DTSID="{85A80E93-46CC-4907-AA88-3901651B57B3}"
-      DTS:ObjectName="localhost\MSSQLSERVER01.stg_hospital_admissions">
-      <DTS:ObjectData>
-        <DTS:ConnectionManager
-          DTS:ConnectRetryCount="1"
-          DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost\MSSQLSERVER01;Initial Catalog=stg_hospital_admissions;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{85A80E93-46CC-4907-AA88-3901651B57B3}localhost\MSSQLSERVER01.stg_hospital_admissions;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -176,13 +164,25 @@
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\Create staging schema"
+          TopLeft="160.156242840458,130.85526172113" />
+        <NodeLayout
+          Size="180,42.6666666666667"
+          Id="Package\Create staging tables"
+          TopLeft="171.093742351514,217.903506386712" />
+        <NodeLayout
           Size="246.666666666667,42.6666666666667"
           Id="Package\Create stg_Customer360 Database"
           TopLeft="94.3749957811089,45.8421047598206" />
         <NodeLayout
-          Size="168,42.6666666666667"
-          Id="Package\Create staging schema"
-          TopLeft="160.156242840458,130.85526172113" />
+          Size="236,42.6666666666667"
+          Id="Package\Load raw data into staging tables"
+          TopLeft="352.343734249007,272.478068043768" />
+        <NodeLayout
+          Size="224,42.6666666666667"
+          Id="Package\Standardise column formatting"
+          TopLeft="554.218725224492,343.644733068954" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="217.708329114442,88.5087714264873">
@@ -217,10 +217,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="180,42.6666666666667"
-          Id="Package\Create staging tables"
-          TopLeft="171.093742351514,217.903506386712" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="244.156242840458,173.521928387796">
@@ -255,10 +251,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="236,42.6666666666667"
-          Id="Package\Load raw data into staging tables"
-          TopLeft="352.343734249007,272.478068043768" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="351.093742351514,239.236839720046">
@@ -287,10 +279,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="224,42.6666666666667"
-          Id="Package\Standardise column formatting"
-          TopLeft="554.218725224492,343.644733068954" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="470.343734249007,315.144734710434">
