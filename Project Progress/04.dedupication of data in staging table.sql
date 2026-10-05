@@ -59,24 +59,26 @@ SELECT *
 FROM Duplicates
 WHERE RowNum > 1;
 
---- Client number, Event Type and Event Date are columns that can be used to identify duplicates in the staging table.
---- The SQL query below will preview the duplicates based on these columns that idenifyaccurate duplicates.
+--- Client number, Account Number, Signup Date, Event Type, Amount and Event Date are columns that can be used to identify duplicates in the staging table.
+--- The SQL query below will preview the duplicates based on these columns that idenify accurate duplicates.
 
 WITH Duplicates AS
 (
     SELECT
         client_number,
-        first_name,
-        last_name,
+        account_number,
+        signup_date,
         event_type,
         event_date,
+        amount,
         ROW_NUMBER() OVER (
             PARTITION BY
                 client_number,
-                first_name,
-                last_name,
+                account_number,
+                signup_date,
                 event_type,
-                event_date
+                event_date,
+                amount
             ORDER BY client_number
         ) AS RowNum
     FROM staging.customer_activity_extract
@@ -91,13 +93,19 @@ WITH Duplicates AS
 ( 
 SELECT
 client_number,
+account_number,
+signup_date,
 event_type,
 event_date,
+amount,
 ROW_NUMBER() OVER (
 PARTITION BY
 client_number,
+account_number,
+signup_date,
 event_type,
-event_date
+event_date,
+amount
 ORDER BY client_number
 ) AS RowNum
 FROM staging.customer_activity_extract
@@ -111,14 +119,82 @@ WITH Duplicates AS
 (
     SELECT
         client_number,
+        account_number,
+        signup_date,
         event_type,
         event_date,
+        amount,
         ROW_NUMBER() OVER (
             PARTITION BY
                 client_number,
+                account_number,
+                signup_date,
                 event_type,
-                event_date
+                event_date,
+                amount
             ORDER BY client_number
+        ) AS RowNum
+    FROM staging.customer_activity_extract
+)
+SELECT *
+FROM Duplicates
+WHERE RowNum > 1;
+
+
+--- Verify entire staging table deduplication.
+
+WITH Duplicates AS
+(
+    SELECT
+    client_number,
+    first_name,
+    last_name,
+    email,
+    mobile_number,
+    date_of_birth,
+    gender,
+    province,
+    city,
+    signup_date,
+    event_type,
+    event_date,
+    account_number,
+    product_type,
+    account_status,
+    credit_limit,
+    loan_amount,
+    account_balance,
+    channel,
+    interaction_type,
+    resolved_flag,
+    transaction_type,
+    amount,
+        ROW_NUMBER() OVER (
+            PARTITION BY Email
+            ORDER BY
+            client_number,
+    first_name,
+    last_name,
+    email,
+    mobile_number,
+    date_of_birth,
+    gender,
+    province,
+    city,
+    signup_date,
+    event_type,
+    event_date,
+    account_number,
+    product_type,
+    account_status,
+    credit_limit,
+    loan_amount,
+    account_balance,
+    channel,
+    interaction_type,
+    resolved_flag,
+    transaction_type,
+    amount
         ) AS RowNum
     FROM staging.customer_activity_extract
 )

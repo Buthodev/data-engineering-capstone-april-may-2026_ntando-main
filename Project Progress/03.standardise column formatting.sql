@@ -94,3 +94,8 @@ SET province =
 
         ELSE 'Unknown'
     END;
+
+--- Verify formatting has been standardised
+
+SELECT *
+FROM staging.customer_activity_extract;

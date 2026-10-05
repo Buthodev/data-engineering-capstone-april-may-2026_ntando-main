@@ -16,7 +16,7 @@ CREATE TABLE staging.customer_activity_extract (
     last_name          VARCHAR(100),
     email               VARCHAR(200),
     mobile_number       VARCHAR(50),
-    date_of_birth       VARCHAR(20),   -- land as text, cast after profiling
+    date_of_birth       VARCHAR(20),  
     gender               VARCHAR(10),
     province             VARCHAR(100),
     city                 VARCHAR(100),

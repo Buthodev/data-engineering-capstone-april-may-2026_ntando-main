@@ -1,5 +1,3 @@
---- Load data from staging tables into dimension and fact tables in the data warehouse
-
 --- Load data into dim_client table from staging table
 
 INSERT INTO dim_client (
@@ -157,36 +155,7 @@ GO
 
 --- Verify that the data has been loaded into the fact table
 
-SELECT TOP 100 *
+SELECT *
 FROM dbo.fact_account_activity;
 
---- Verify there are no duplicate records in the fact table
 
-SELECT
-    event_id,
-    location_id,
-    client_id,
-    account_id,
-    interaction_id,
-    flag_id,
-    channel_id,
-    loan_amount,
-    credit_limit,
-    amount,
-    account_balance,
-    COUNT(*) AS duplicate_count
-FROM dbo.fact_account_activity
-GROUP BY
-    event_id,
-    location_id,
-    client_id,
-    account_id,
-    interaction_id,
-    flag_id,
-    channel_id,
-    loan_amount,
-    credit_limit,
-    amount,
-    account_balance
-HAVING COUNT(*) > 1
-ORDER BY duplicate_count DESC;
