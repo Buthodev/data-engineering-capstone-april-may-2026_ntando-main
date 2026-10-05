@@ -11,8 +11,8 @@
   DTS:LocaleID="7177"
   DTS:ObjectName="Staging Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="13"
-  DTS:VersionGUID="{87278E58-119A-4A81-998B-D83204A8A0C2}">
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{4596F260-2B67-4AF0-8AAD-B1A98B1D2ACC}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>

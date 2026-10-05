@@ -11,8 +11,8 @@
   DTS:LocaleID="7177"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:VersionBuild="4"
-  DTS:VersionGUID="{ACAE2DA4-46A1-49C7-B33D-BE31AD50EB1C}">
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{1E0BED35-BB70-4D8C-B9B5-02EDC0045375}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -45,7 +45,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{676577EF-5B7F-418C-A2AE-40CC4E1EB1EC}"
-          SQLTask:SqlStatementSource="WITH Duplicates AS&#xA;( &#xA;SELECT&#xA;client_number,&#xA;first_name,&#xA;last_name,&#xA;event_type,&#xA;event_date,&#xA;ROW_NUMBER() OVER (&#xA;PARTITION BY&#xA;client_number,&#xA;first_name,&#xA;last_name,&#xA;event_type,&#xA;event_date&#xA;ORDER BY client_number&#xA;) AS RowNum&#xA;FROM staging.customer_activity_extract&#xA;)&#xA;DELETE FROM Duplicates&#xA;WHERE RowNum &gt; 1;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="IF EXISTS (&#xA;    SELECT 1&#xA;    FROM staging.customer_activity_extract&#xA;    GROUP BY&#xA;        client_number,&#xA;        account_number,&#xA;        signup_date,&#xA;        event_type,&#xA;        event_date,&#xA;        amount&#xA;    HAVING COUNT(*) &gt; 1&#xA;)&#xA;BEGIN&#xA;&#xA;    WITH Duplicates AS&#xA;    (&#xA;        SELECT&#xA;            client_number,&#xA;            account_number,&#xA;            signup_date,&#xA;            event_type,&#xA;            event_date,&#xA;            amount,&#xA;            ROW_NUMBER() OVER (&#xA;                PARTITION BY&#xA;                    client_number,&#xA;                    account_number,&#xA;                    signup_date,&#xA;                    event_type,&#xA;                    event_date,&#xA;                    amount&#xA;                ORDER BY client_number&#xA;            ) AS RowNum&#xA;        FROM staging.customer_activity_extract&#xA;    )&#xA;    DELETE FROM Duplicates&#xA;    WHERE RowNum &gt; 1;&#xA;&#xA;    PRINT 'Duplicate records found and removed successfully.';&#xA;END&#xA;ELSE&#xA;BEGIN&#xA;    PRINT 'No duplicate records found. No deletion was performed.';&#xA;END;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>

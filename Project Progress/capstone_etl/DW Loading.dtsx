@@ -11,8 +11,8 @@
   DTS:LocaleID="7177"
   DTS:ObjectName="DW Loading"
   DTS:PackageType="5"
-  DTS:VersionBuild="9"
-  DTS:VersionGUID="{F4B1C51B-95F0-4080-8A4E-796008F53EAE}">
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{C3AB1478-3544-45DD-A127-3F9D83607052}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -96,7 +96,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{7C641430-75A9-4E36-B04D-B5144466AEDC}"
-          SQLTask:SqlStatementSource="INSERT INTO dim_client (&#xA;    client_number,&#xA;    first_name,&#xA;    last_name,&#xA;    gender,&#xA;    date_of_birth,&#xA;    signup_date,&#xA;    mobile_number,&#xA;    email&#xA;)&#xA;SELECT DISTINCT&#xA;    client_number,&#xA;    first_name,&#xA;    last_name,&#xA;    gender,&#xA;    date_of_birth,&#xA;    signup_date,&#xA;    mobile_number,&#xA;    email&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_location table from staging table&#xA;&#xA;&#xA;INSERT INTO dim_location (&#xA;    city,&#xA;    province&#xA;)&#xA;SELECT DISTINCT&#xA;    city,&#xA;    province&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_event table from staging table&#xA;&#xA;INSERT INTO dim_event (&#xA;    event_date,&#xA;    event_type&#xA;)&#xA;SELECT DISTINCT&#xA;    event_date,&#xA;    event_type&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_flag table from staging table&#xA;&#xA;INSERT INTO dim_flag (&#xA;    resolved_flag&#xA;)&#xA;SELECT DISTINCT&#xA;    resolved_flag&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_channel table from staging table&#xA;&#xA;INSERT INTO dim_channel (&#xA;    channel&#xA;)&#xA;SELECT DISTINCT&#xA;    channel&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_account table from staging table&#xA;&#xA;INSERT INTO dim_account (&#xA;    account_number,&#xA;    product_type,&#xA;    account_status,&#xA;    transaction_type&#xA;)&#xA;SELECT DISTINCT&#xA;    account_number,&#xA;    product_type,&#xA;    account_status,&#xA;    transaction_type&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;&#xA;--- Load data into dim_interaction table from staging table&#xA;&#xA;INSERT INTO dim_interaction (&#xA;    interaction_type&#xA;)&#xA;SELECT DISTINCT&#xA;    interaction_type&#xA;FROM stg_Customer360.staging.customer_activity_extract;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="-- Load data into dim_client table from staging table&#xA;&#xA;INSERT INTO dim_client (&#xA;    client_number,&#xA;    first_name,&#xA;    last_name,&#xA;    gender,&#xA;    date_of_birth,&#xA;    signup_date,&#xA;    mobile_number,&#xA;    email&#xA;)&#xA;SELECT DISTINCT&#xA;    s.client_number,&#xA;    s.first_name,&#xA;    s.last_name,&#xA;    s.gender,&#xA;    s.date_of_birth,&#xA;    s.signup_date,&#xA;    s.mobile_number,&#xA;    s.email&#xA;FROM stg_Customer360.staging.customer_activity_extract s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dim_client d&#xA;    WHERE d.client_number = s.client_number&#xA;);&#xA;&#xA;&#xA;-- Load data into dim_location table from staging table&#xA;&#xA;INSERT INTO dim_location (&#xA;    city,&#xA;    province&#xA;)&#xA;SELECT DISTINCT&#xA;    s.city,&#xA;    s.province&#xA;FROM stg_Customer360.staging.customer_activity_extract s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dim_location d&#xA;    WHERE d.city = s.city&#xA;      AND d.province = s.province&#xA;);&#xA;&#xA;&#xA;-- Load data into dim_event table from staging table&#xA;&#xA;INSERT INTO dim_event (&#xA;    event_date,&#xA;    event_type&#xA;)&#xA;SELECT DISTINCT&#xA;    s.event_date,&#xA;    s.event_type&#xA;FROM stg_Customer360.staging.customer_activity_extract s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dim_event d&#xA;    WHERE d.event_date = s.event_date&#xA;      AND d.event_type = s.event_type&#xA;);&#xA;&#xA;&#xA;-- Load data into dim_flag table from staging table&#xA;&#xA;INSERT INTO dim_flag (&#xA;    resolved_flag&#xA;)&#xA;SELECT DISTINCT&#xA;    s.resolved_flag&#xA;FROM stg_Customer360.staging.customer_activity_extract s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dim_flag d&#xA;    WHERE d.resolved_flag = s.resolved_flag&#xA;);&#xA;&#xA;&#xA;-- Load data into dim_channel table from staging table&#xA;&#xA;INSERT INTO dim_channel (&#xA;    channel&#xA;)&#xA;SELECT DISTINCT&#xA;    s.channel&#xA;FROM stg_Customer360.staging.customer_activity_extract s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dim_channel d&#xA;    WHERE d.channel = s.channel&#xA;);&#xA;&#xA;&#xA;-- Load data into dim_account table from staging table&#xA;&#xA;INSERT INTO dim_account (&#xA;    account_number,&#xA;    product_type,&#xA;    account_status,&#xA;    transaction_type&#xA;)&#xA;SELECT DISTINCT&#xA;    s.account_number,&#xA;    s.product_type,&#xA;    s.account_status,&#xA;    s.transaction_type&#xA;FROM stg_Customer360.staging.customer_activity_extract s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dim_account d&#xA;    WHERE d.account_number = s.account_number&#xA;      AND d.product_type = s.product_type&#xA;      AND d.account_status = s.account_status&#xA;      AND d.transaction_type = s.transaction_type&#xA;);&#xA;&#xA;&#xA;-- Load data into dim_interaction table from staging table&#xA;&#xA;INSERT INTO dim_interaction (&#xA;    interaction_type&#xA;)&#xA;SELECT DISTINCT&#xA;    s.interaction_type&#xA;FROM stg_Customer360.staging.customer_activity_extract s&#xA;WHERE NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM dim_interaction d&#xA;    WHERE d.interaction_type = s.interaction_type&#xA;);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -168,9 +168,21 @@
           Id="Package\Create DW"
           TopLeft="19.9999991059304,12.3157893384593" />
         <NodeLayout
+          Size="224,42.6666666666667"
+          Id="Package\Create DW dim and fact tables"
+          TopLeft="372.499983347953,149.842103617921" />
+        <NodeLayout
           Size="174.666666666667,42.6666666666667"
           Id="Package\Create DW Schema"
           TopLeft="168.124992484227,74.5789465495589" />
+        <NodeLayout
+          Size="216,42.6666666666667"
+          Id="Package\Load dims from staging to dw"
+          TopLeft="537.698388661421,234.043439368428" />
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\Load fact into dw"
+          TopLeft="749.999966472388,322.947364875154" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="151.99999910593,33.6491226717926">
@@ -199,10 +211,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="224,42.6666666666667"
-          Id="Package\Create DW dim and fact tables"
-          TopLeft="372.499983347953,149.842103617921" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="255.45832581756,117.245613216226">
@@ -237,10 +245,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="216,42.6666666666667"
-          Id="Package\Load dims from staging to dw"
-          TopLeft="537.698388661421,234.043439368428" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="484.499983347953,192.508770284588">
@@ -275,10 +279,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="160,42.6666666666667"
-          Id="Package\Load fact into dw"
-          TopLeft="749.999966472388,322.947364875154" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="645.698388661421,276.710106035095">

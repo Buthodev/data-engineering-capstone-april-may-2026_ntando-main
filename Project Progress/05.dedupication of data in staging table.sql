@@ -201,3 +201,54 @@ WITH Duplicates AS
 SELECT *
 FROM Duplicates
 WHERE RowNum > 1;
+
+
+----------------------------------------------------------------------------------
+
+--- ETL Pipeline Statement 'Dedup and Clean' Package
+--- SQL statement only deletes duplicates if found in the data
+
+IF EXISTS (
+    SELECT 1
+    FROM staging.customer_activity_extract
+    GROUP BY
+        client_number,
+        account_number,
+        signup_date,
+        event_type,
+        event_date,
+        amount
+    HAVING COUNT(*) > 1
+)
+BEGIN
+
+    WITH Duplicates AS
+    (
+        SELECT
+            client_number,
+            account_number,
+            signup_date,
+            event_type,
+            event_date,
+            amount,
+            ROW_NUMBER() OVER (
+                PARTITION BY
+                    client_number,
+                    account_number,
+                    signup_date,
+                    event_type,
+                    event_date,
+                    amount
+                ORDER BY client_number
+            ) AS RowNum
+        FROM staging.customer_activity_extract
+    )
+    DELETE FROM Duplicates
+    WHERE RowNum > 1;
+
+    PRINT 'Duplicate records found and removed successfully.';
+END
+ELSE
+BEGIN
+    PRINT 'No duplicate records found. No deletion was performed.';
+END;
