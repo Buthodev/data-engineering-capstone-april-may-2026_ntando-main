@@ -16,15 +16,15 @@ GROUP BY
 ORDER BY
     customer_count DESC;
 
---- Eastern Cape: 266 customers, 13.10% 
---- Kwa Zulu-Natal: 261 customers, 12.86%
---- Mpumalanga: 246 customers, 12.12%
---- Western Cape: 231 customers, 11.38%
---- Gauteng: 228 customers, 11.23%
---- North West: 220 customers, 10.84%
---- Free State: 210 customers, 10.34%
---- Northern Cape: 185 customers, 9.11%
---- Limpopo: 183 customers, 9.01%
+--- Eastern Cape: 191 customers, 12.87% 
+--- Kwa Zulu-Natal: 187 customers, 12.60%
+--- Mpumalanga: 176 customers, 11.86%
+--- Western Cape: 165 customers, 11.12%
+--- Free State: 164 customers, 11.05%
+--- Gauteng: 164 customers, 11.05%
+--- North West: 158 customers, 10.65%
+--- Northern Cape: 142 customers, 9.57%
+--- Limpopo: 137 customers, 9.23%
 
 --- 2. What is the age distribution of the customer base? Present it in age bands of your own choosing and justify the bands.
 
@@ -133,13 +133,15 @@ ORDER BY
 
 --- Please note that the age bands are in gaps of 10 years.
 
---- Under 20: 47 customers, 2.32%
---- 20-29: 354 customers, 17.44%
---- 30-39: 349 customers, 17.19%
---- 40-49: 328 customers, 16.16%
---- 50-59: 347 customers, 17.09%
---- 60-69: 333 customers, 16.40%
---- 70+: 272 customers, 13.40%
+--- Under 20: 33 customers, 2.22%
+--- 20-29: 255 customers, 17.18%
+--- 30-39: 260 customers, 17.52%
+--- 40-49: 239 customers, 16.11%
+--- 50-59: 252 customers, 16.98%
+--- 60-69: 250 customers, 16.85%
+--- 70+: 195 customers, 13.14%
+
+--- The bank has a total of 1484 customers.
 
 --- 3. How many customers have signed up per month over the last two years? Is signup growth trending up, flat, or down?
 
@@ -183,17 +185,17 @@ ORDER BY
     signup_year,
     signup_month;
 
---- October 2024: 31 signups
---- November 2024: 54 signups, 74.19% growth
---- December 2024: 41 signups, -24.07% growth
---- January 2025: 52 signups, 26.83% growth
---- February 2025: 62 signups, 19.23% growth
---- March 2025: 52 signups, -16.13% growth
---- April 2025: 49 signups, -5.77% growth
---- May 2025: 53 signups, 8.16% growth
---- June 2025: 30 signups, -43.40% growth
+--- October 2024: 23 signups
+--- November 2024: 38 signups, 65.22% growth
+--- December 2024: 30 signups, -21.05% growth
+--- January 2025: 37 signups, 23.33% growth
+--- February 2025: 47 signups, 27.03% growth
+--- March 2025: 41 signups, -12.77% growth
+--- April 2025: 37 signups, -9.76% growth
+--- May 2025: 39 signups, 5.41% growth
+--- June 2025: 21 signups, -46.15% growth
 
---- The signup growth is trending flat with the positive and negative growth percentages fluctuations.
+--- The signup growth is trending flat with the positive and negative growth percentages fluctuations and consistent new signups each month.
 
 --- 4. How many customer records look like data quality problems (e.g. missing contact details, duplicate identity)? Report the count and what you count as a "problem".
 
@@ -333,13 +335,12 @@ WHERE
     OR duplicate_client_number = 1
     OR duplicate_identity = 1;
 
---- The total number of customer records with at least one problem is 1175.
---- Out of the 12420 problematic records, the breakdown is as follows:
---- 159 missing mobile number
---- 40 missing email addresses
---- 1092 duplicate client numbers
-
---- 199 customer records have valid problems as the duplicate client numbers represent multiple transactions from the same customer.
+--- The total number of customer records with at least one problem is 139.
+--- Out of the 139 problematic records, the breakdown is as follows:
+--- 113 missing mobile number
+--- 29 missing email addresses
+--- 0 duplicate client numbers
+--- 0 duplicate identity records
 
 --- 5. How many customers hold each product type, and how many hold more than one product (cross-holding)?
 
@@ -401,11 +402,10 @@ ORDER BY
     ps.customer_count DESC;
 
 
---- Savings: 954 customers, 47%
---- Credit card: 940 customers, 46.31%
---- Personal loan: 895 customers, 44.09%
---- Unknown: 1958 customers, 16.09%
---- Customers with multiple products: 1688, 83.15% of total customers
+--- Savings: 678 customers, 45.69%
+--- Credit card: 673 customers, 45.35%
+--- Personal loan: 649 customers, 43.73%
+--- Customers with multiple products: 1219, 82.14% of total customers
 
 
 --- 6. What is the total and average account balance by product type?
@@ -429,10 +429,9 @@ ORDER BY
     total_account_balance DESC;
 
 
---- Savings: Total = 188177855.72, Average = 38944.09
---- Personal Loan: Total = 108760452.35, Average = 23715.75
---- Credit Card: Total = 53532482.62, Average = 11014.91
---- Unknown: Total: NULL, Average: NULL
+--- Savings: Total = 135441481.13, Average = 38631.34
+--- Personal Loan: Total = 80513506.81, Average = 23610.99
+--- Credit Card: Total = 37946095.23, Average = 10780.14
 
 --- 7. Which customers hold a Savings account but no Credit Card? Report the count, this is a cross-sell list.
 
@@ -473,7 +472,7 @@ WHERE
     AND has_credit_card = 0;
 
 
---- The count is 529
+--- The cross-sell count is 382
 
 --- 8. What proportion of Credit Card accounts are within 90% of their credit limit?
 
@@ -510,7 +509,7 @@ WHERE UPPER(LTRIM(RTRIM(a.product_type))) = 'CREDIT CARD'
   AND f.account_balance IS NOT NULL;
 
 
---- 485 credit cards accounts or 9.98% of the total credit card accounts are within 90% of their credit limit.
+--- 358 credit cards accounts or 10.17% of the total credit card accounts are within 90% of their credit limit.
 
 --- 9. What is total transaction value by month, split by transaction type? Are there seasonal patterns?
 
@@ -542,6 +541,7 @@ ORDER BY
     transaction_year,
     transaction_month,
     a.transaction_type;
+    
 
 --- The data shows that there's a spike in transaction values during the months of December and January, which could be attributed to holiday spending and New Year financial activities.
 
@@ -561,8 +561,8 @@ ORDER BY
     transaction_count DESC;
 
 
---- POS channel has the highest transaction count with 29105 total transactions
---- Online Banking channel has the highest total transaction value with 43511852.10 total value
+--- POS channel has the highest transaction count with 22454 total transactions
+--- Online Banking channel has the highest total transaction value with 33781284.79 total value
 --- The difference in channels handling the most transactions versus the highest total value can be attributed to the nature of transactions. POS transactions are typically smaller, everyday purchases, leading to a higher count but lower total value. In contrast, Online Banking transactions may involve larger sums, such as bill payments or transfers, resulting in a lower count but higher total value.
 
 --- 11. Define "active customer" using transaction and/or interaction recency, state your definition, and report how many customers are active vs not, as of the latest date in the data.
@@ -628,7 +628,9 @@ ORDER BY
     customer_status DESC;
 
 --- I define an "active customer" as one who has had at least one transaction or interaction within the last 120 days from the latest date in the data. This definition captures customers who are currently engaged with the bank's services.
---- Using that definition, there are 49 active customers which represent 2.41% of the total customer base.
+--- Using that definition, there are:
+--- 31 active customers which represent 2.09% of the total customer base.
+--- 1453 not active customers which represent 97.91% of the total customer base.
 
 
 --- 12. Who are the top 20 customers by total transaction value in the last 12 months of data? (Use the latest transaction date in the data as your reference point, not today's date, this is a static extract.)
@@ -678,24 +680,26 @@ ORDER BY
 
 
 --- The top 20 customers by total transaction value in the last 12 months are as follows:
---- David De vil: 178916.04
---- David De villiers: 178916.04
---- Ayesha De Villiers: 172571.75
---- Ayesha De Vill: 172571.75
---- Nadia Pillay: 156751.80
+--- Nadia Pillay:223344.72
+--- Ayesha De vill: 155464.43
 --- Marike Adams: 155256.80
+--- Karabo Naidoo: 155009.28
 --- Chane Mabaso: 154276.80
 --- Andile Abraham: 146465.84
---- Andile Abrahams: 146465.84
---- Naledi Abrahams: 146415.30
 --- Naledi Abraham: 146415.30
+--- David De vil: 144039.45
 --- Ilse Smith: 143697.00
---- Sam Dlamini: 137946.69
 --- Sam Dlam: 137946.69
 --- Marike Naidoo: 136697.96
+--- Johan Steyn: 136630.17
 --- Vusi Nkosi: 134736.66
---- Mpho Petersen: 130751.55
+--- Riaan Nkosi: 134203.32
 --- Mpho Peter: 130751.55
+--- Ayesha Smith: 124481.75
+--- Karabo De vill: 117040.10
+--- Kyle Peter: 116541.66
+--- Thabo Mabaso: 113164.66
+--- Grace Botha: 112698.70
 
 
 --- 13. What is the average number of interactions per customer, split by interaction type?
@@ -734,12 +738,12 @@ CROSS JOIN total_customers AS tc
 ORDER BY
     average_interactions_per_customer DESC;
 
---- Zero interactions:60.69 average interactions per customer
---- Query: 1.38 average interactions per customer
---- Complaint: 0.62 average interactions per customer
---- Product Application: 0.61 average interactions per customer
+--- Zero interactions:62.94 average interactions per customer
+--- Query: 1.36 average interactions per customer
+--- Complaint: 0.60 average interactions per customer
+--- Product Application: 0.60 average interactions per customer
 --- Feedback: 0.31 average interactions per customer
---- Fraud Report: 0.15 average interactions per customer
+--- Fraud Report: 0.14 average interactions per customer
 
 --- 14. Which channel is most used for complaints specifically, versus other interaction types?
 
@@ -787,7 +791,7 @@ ORDER BY
     interaction_category,
     interaction_count DESC;
 
---- Complaints are most frequently handled through the Call channel which accounts for 21.87% of all complaint interactions.
+--- Complaints are most frequently handled through the Call channel which accounts for 21.74% of all complaint interactions.
 
 
 --- 15. What is the resolution rate (resolved_flag = Y) by channel? Which channel resolves the least, and could that be sample-size noise rather than a real difference?
@@ -933,12 +937,14 @@ ORDER BY
 --- Online Banking: 0%
 --- POS: 0%
 --- EFT: 0%
---- Branch: 5.01%
---- WhatsApp: 73.83%
---- Call: 74.62%
---- Chat: 76.95%   
+--- Branch: 4.76%
+--- Call: 74.72%
+--- WhatsApp: 74.75%
+--- Email: 76.02%
+--- Chat: 77.24%  
 
---- The channels with 0% resolution rates are reliable as they have been chacked with a larger sample size, indicating that these channels may not be effective for resolving customer issues. The channels with higher resolution rates, such as WhatsApp, Call, and Chat, have larger sample sizes and are more reliable indicators of effective resolution.
+--- The channels with 0% resolution rates are reliable as they have been chacked with a larger sample size, indicating that these channels may not be effective for resolving customer issues.
+--- The channels with higher resolution rates, such as Call, WhatsApp, Email and Chat, have larger sample sizes and are more reliable indicators of effective resolution.
 
 --- 16. Segment customers into a small number of value tiers based on transaction activity (your choice of method, quartiles, fixed thresholds, etc.). Report the customer count and total transaction value per tier.
 
@@ -1007,10 +1013,10 @@ ORDER BY
 
 
 --- The customer segmentation into value tiers based on transaction activity is as follows:
---- Low Value: 508 customers; Total Transaction Value: -77996265.97
---- Medium Value: 508 customers; Total Transaction Value: -26291805.67
---- High Value: 507 customers; Total Transaction Value: -2376530.77
---- Very High Value: 507 customers; Total Transaction Value: 23259407.87
+--- Low Value: 371 customers; Total Transaction Value: -159205.05
+--- Medium Value: 371 customers; Total Transaction Value: -54010.55
+--- High Value: 371 customers; Total Transaction Value: -4512.31
+--- Very High Value: 371 customers; Total Transaction Value: 44799.42
 
 
 --- 17. Build a simple customer lifecycle segmentation (e.g. New / Active / At risk / Dormant) using signup date and activity recency. State your thresholds and justify them. Report the customer count per segment.
@@ -1122,9 +1128,9 @@ ORDER BY
 --- Using these thresholds, the customer counts per segment are:
 
 --- New: 0
---- Active: 34
---- At Risk: 581
---- Dormant: 1415
+--- Active: 22
+--- At Risk: 413
+--- Dormant: 1049
 
 --- 18. Is there a relationship between number of CRM interactions and transaction value?
 
@@ -1213,10 +1219,10 @@ ORDER BY
 
 
 --- The relationship between the number of CRM interactions and transaction value is as follows:
---- 1-2 interactions: 0 total transaction value
---- 3-5 interactions: 0 total transaction value
---- 6-10 interactions: 195588.06 total transaction value
---- 11+ interactions: -83600782.60 total transaction value
+--- 1-2 interactions: 89 customer count; 0 total transaction value
+--- 3-5 interactions: 121 customer count; 0 total transaction value
+--- 6-10 interactions: 31 customer count; 131451.22 total transaction value
+--- 11+ interactions: 1243 customer count; -64287919.14 total transaction value
 
 
 --- 19. Build a month-over-month retention view: of customers active in month N, what percentage were still active in month N+1?
@@ -1281,6 +1287,8 @@ FROM monthly_retention
 
 ORDER BY
     month_n;
+
+--- I've defined Month N as month 2, which N+1 retained 4 customers with a month-to-month retention of 66.67%    
 
 
 
@@ -1369,33 +1377,55 @@ anomalies AS
         END AS z_score
 
     FROM account_history
+),
+
+flagged_anomalies AS
+(
+    SELECT
+        account_id,
+        account_number,
+        product_type,
+        transaction_month,
+        monthly_transaction_value,
+        z_score
+
+    FROM anomalies
+
+    WHERE z_score >= 2
 )
 
 SELECT
     account_id,
     account_number,
     product_type,
-    transaction_month,
 
-    monthly_transaction_value,
-    CAST(average_monthly_value AS DECIMAL(18,2))
-        AS historical_average,
+    COUNT(*) AS flagged_transaction_count,
 
-    CAST(standard_deviation AS DECIMAL(18,2))
-        AS historical_std_dev,
+    SUM(monthly_transaction_value) AS flagged_transaction_value,
 
-    CAST(z_score AS DECIMAL(10,2))
-        AS z_score,
+    MAX(z_score) AS highest_z_score
 
-    'Potential unusual transaction spike'
-        AS anomaly_flag
+FROM flagged_anomalies
 
-FROM anomalies
-
-WHERE z_score >= 2
+GROUP BY
+    account_id,
+    account_number,
+    product_type
 
 ORDER BY
-    z_score DESC;
+    flagged_transaction_count DESC,
+    highest_z_score DESC;
+
+
+--- I would need the following additional information to investigate potential fraud further:
+--- Transaction timestamp — unusual activity concentrated at unusual hours.
+--- Transaction location — whether transactions occurred in unexpected geographic locations.
+--- Device information — new device, browser, or device fingerprint.
+--- IP address / login location — especially changes in geographic location.
+--- Transaction merchant/beneficiary — new or high-risk recipients.
+--- Transaction velocity — many transactions within minutes or hours.
+--- Previous transaction history — whether the spike is genuinely abnormal for this customer.
+--- Failed login/transaction attempts — potential account takeover indicators.
 
 
 
