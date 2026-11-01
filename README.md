@@ -423,8 +423,3 @@ Through this project, I developed practical experience in:
 
 - [GitHub Repository](https://github.com/Buthodev/data-engineering-capstone-april-may-2026_ntando-main)
 - [Project Files](https://github.com/Buthodev/data-engineering-capstone-april-may-2026_ntando-main/tree/main/Project%20Files)
-
----
-
-**Author:** Ntando Ndwandwe 
-**GitHub:** [@Buthodev](https://github.com/Buthodev)
