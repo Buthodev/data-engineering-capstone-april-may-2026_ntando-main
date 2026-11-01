@@ -1,7 +1,15 @@
 # Customer 360 Data Warehouse | Data Engineering Capstone
 
 **Author:** Ntando  
-**GitHub:** [@Buthodev](https://github.com/Buthodev)  
+**GitHub:** [@Buthodev](https://github.com/Buthodev) 
+
+![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-red)
+![SSIS](https://img.shields.io/badge/SSIS-ETL-blue)
+![T--SQL](https://img.shields.io/badge/T--SQL-Data%20Transformation-orange)
+![Data Engineering](https://img.shields.io/badge/Project-Data%20Engineering-green)
+![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
+
+--- 
 
 
 ## 1. Project Overview
