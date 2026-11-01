@@ -78,7 +78,7 @@ flowchart TD
 
     FACT --> I["Analytical SQL Queries"]
     I --> J["Customer 360 Business Insights"]
-```
+```mermaid
 
 ### Architecture explanation
 
