@@ -54,7 +54,6 @@ This project addresses that challenge by creating a repeatable data preparation 
 The project follows a staged ETL architecture.
 
 ![alt text](mermaid-diagram.png)
-![alt text](<Customer360Capstone Star Schema v3-2.png>)
 
 ---
 
