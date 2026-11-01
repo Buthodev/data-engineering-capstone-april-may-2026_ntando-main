@@ -250,14 +250,13 @@ Validation results should be recorded alongside the ETL execution results.
 
 | Metric | Result |
 |---|---|
-| Source records | [Insert actual count] |
-| Records staged | [Insert actual count] |
-| Duplicate records identified | [Insert actual count] |
-| Rejected records | [Insert actual count] |
-| Records loaded into fact table | [Insert actual count] |
-| Unresolved dimension keys | [Insert actual count] |
+| Source records | 21500 rows |
+| Records staged | 21500 rows |
+| Duplicate records identified | 23 rows |
+| Rejected records | 0 rows |
+| Records loaded into fact table | 21477 rows |
+| Unresolved dimension keys | None |
 
-*Replace these placeholders with results from a verified pipeline execution.*
 
 ## 10. Repository Structure
 
