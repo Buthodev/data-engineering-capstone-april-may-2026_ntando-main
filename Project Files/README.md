@@ -1,7 +1,7 @@
 # Customer 360 Data Warehouse | Data Engineering Capstone
 
 **Author:** Ntando  
-**GitHub:** [@Buthodev](https://github.com/Buthodev) 
+**GitHub:** [@Buthodev](https://github.com/Buthodev)  
 
 ![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-red)
 ![SSIS](https://img.shields.io/badge/SSIS-ETL-blue)
@@ -9,8 +9,7 @@
 ![Data Engineering](https://img.shields.io/badge/Project-Data%20Engineering-green)
 ![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
 
---- 
-
+---
 
 ## 1. Project Overview
 
@@ -54,7 +53,9 @@ This project addresses that challenge by creating a repeatable data preparation 
 
 The project follows a staged ETL architecture.
 
-![alt text](mermaid-diagram-1.png)
+![alt text](mermaid-diagram.png)
+
+---
 
 ### Architecture explanation
 
@@ -187,14 +188,11 @@ These results should be populated after running the pipeline and its validation 
 
 | Metric | Result |
 |---|---|
-| Source records | To be measured |
-| Staging records | To be measured |
-| Duplicate records identified | To be measured |
-| Rejected records | To be measured |
-| Dimension records loaded | To be measured |
-| Fact records loaded | To be measured |
-| Unmatched dimension keys | To be measured |
-| Reconciliation difference | To be measured |
+| Source records | 21500 |
+| Staging records | 21500 |
+| Duplicate records identified | 23 |
+
+---
 
 ## 9. Business Questions and Analytical SQL
 
@@ -214,9 +212,9 @@ The analysis includes topics such as:
 - Banking transaction and interaction patterns.
 - Customer activity and account balances.
 
-The SQL queries are supported by screenshots stored in:
+The SQL queries evidence are supported by screenshots stored in:
 
-`Project Files/Customer_360_Screenshots/`
+`Project Files/`
 
 These screenshots provide visual evidence of selected query outputs.
 
@@ -250,6 +248,7 @@ data-engineering-capstone-april-may-2026_ntando-main/
     │   ├── DW Loading.dtsx
     │   ├── capstone_etl.dtproj
     │   └── capstone_etl.slnx
+    |   └── SSIS Packages (Evidence of ETL functionality)
     │
     ├── Customer360Capstone Star Schema v3.png
     ├── Customer360Capstone Star Schema v3.pdf
@@ -257,8 +256,7 @@ data-engineering-capstone-april-may-2026_ntando-main/
     ├── Questions and Answers.sql
     │
     ├── Customer_360_Screenshots/
-    │
-    └── SSIS Packages/
+
 ```
 
 ## 11. How to Run the Project
@@ -364,14 +362,6 @@ These considerations also identify areas for further improvement, particularly a
 
 The following improvements are planned or recommended:
 
-- Implement a fully idempotent incremental loading strategy.
-- Define and enforce dimension business-key uniqueness.
-- Introduce a dedicated date dimension.
-- Implement explicit unknown dimension members.
-- Add source-to-target reconciliation and automated data quality checks.
-- Add ETL execution logging, error handling and recovery.
-- Define slowly changing dimension (SCD) requirements.
-- Improve indexing and query performance.
 - Develop a Power BI dashboard for business reporting.
 - Explore cloud-based data warehousing and orchestration as a later enhancement.
 
