@@ -131,11 +131,7 @@ The current table has an identity-based primary key named `activity_id`.
 
 The dimensional model is illustrated below.
 
-![Customer 360 Star Schema](Project%20Files/Customer360Capstone%20Star%20Schema%20v3.png)
-
-The original diagram is also available in PDF format:
-
-[View the Customer 360 Star Schema PDF](Project%20Files/Customer360Capstone%20Star%20Schema%20v3.pdf)
+![alt text](<Customer360Capstone Star Schema v3-2.png>)
 
 ## 7. ETL Implementation
 
