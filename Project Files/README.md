@@ -54,39 +54,7 @@ This project addresses that challenge by creating a repeatable data preparation 
 
 The project follows a staged ETL architecture.
 
-```mermaid
-flowchart TD
-    A["Raw Banking Activity Extract"] --> B["Data Import"]
-    B --> C[("SQL Server Staging Database<br/>stg_Customer360")]
-    C --> D["Data Standardisation<br/>T-SQL"]
-    D --> E["Deduplication and Cleaning"]
-    E --> F["SSIS Master Package"]
-
-    F --> G["Dimension Loading"]
-    F --> H["Fact Loading"]
-
-    subgraph DW["Customer360_DW"]
-        G --> D1["dim_client"]
-        G --> D2["dim_account"]
-        G --> D3["dim_event"]
-        G --> D4["dim_location"]
-        G --> D5["dim_interaction"]
-        G --> D6["dim_flag"]
-        G --> D7["dim_channel"]
-
-        D1 --> FACT[("fact_account_activity")]
-        D2 --> FACT
-        D3 --> FACT
-        D4 --> FACT
-        D5 --> FACT
-        D6 --> FACT
-        D7 --> FACT
-        H --> FACT
-    end
-
-    FACT --> I["Analytical SQL Queries"]
-    I --> J["Customer 360 Business Insights"]
-```mermaid
+![alt text](mermaid-diagram-1.png)
 
 ### Architecture explanation
 
