@@ -282,7 +282,7 @@ data-engineering-capstone-april-may-2026_ntando-main/
     │
     ├── Customer_360_Screenshots/
     │
-    └── ETL Package Screenshots/
+    └── SSIS Packages/
 ```
 
 ## 11. How to Run the Project
