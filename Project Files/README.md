@@ -34,44 +34,15 @@ The project demonstrates practical data engineering concepts, including:
 
 ## Data Architecture
 
-flowchart TD
-    A["Source Data<br/>Banking Activity Extract"] --> B["Data Extraction<br/>SQL Server Import"]
-    B --> C[("Staging Database<br/>Raw Activity Data")]
+![alt text](mermaid-diagram.png)
 
-    C --> D["Data Cleaning & Standardisation<br/>T-SQL Transformations"]
-    D --> E["Data Deduplication<br/>Quality Checks"]
-    E --> F["SSIS ETL Orchestration"]
-
-    F --> G["Load Dimension Tables"]
-    F --> H["Load Fact Table"]
-
-    subgraph DW["SQL Server Data Warehouse"]
-        G --> G1["dim_client"]
-        G --> G2["dim_account"]
-        G --> G3["dim_event"]
-        G --> G4["dim_location"]
-        G --> G5["dim_interaction"]
-        G --> G6["dim_flag"]
-        G --> G7["dim_channel"]
-
-        H --> I[("fact_account_activity")]
-        G1 --> I
-        G2 --> I
-        G3 --> I
-        G4 --> I
-        G5 --> I
-        G6 --> I
-        G7 --> I
-    end
-
-    I --> J["SQL Analytics & Reporting<br/>T-SQL Queries"]
-    J --> K["Customer 360 Insights<br/>Business Questions & Analysis"]
 
 ### Star Schema
 
 The following diagram illustrates the warehouse structure.
 
-![Customer 360 Star Schema](screenshots/Customer360Capstone%20Star%20Schema%20v3.png)
+![alt text](<Customer360Capstone Star Schema v3-1.png>)
+
 
 *The diagram illustrates the central fact table and its relationships with the seven dimensions.*
 
