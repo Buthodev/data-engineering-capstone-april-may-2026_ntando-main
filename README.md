@@ -78,7 +78,7 @@ flowchart TD
 
     FACT --> I["Analytical SQL Queries"]
     I --> J["Customer 360 Business Insights"]
-```
+```mermaid
 
 ### Architecture explanation
 
@@ -131,11 +131,7 @@ The current table has an identity-based primary key named `activity_id`.
 
 The dimensional model is illustrated below.
 
-![Customer 360 Star Schema](Project%20Files/Customer360Capstone%20Star%20Schema%20v3.png)
-
-The original diagram is also available in PDF format:
-
-[View the Customer 360 Star Schema PDF](Project%20Files/Customer360Capstone%20Star%20Schema%20v3.pdf)
+![alt text](<Customer360Capstone Star Schema v3-2.png>)
 
 ## 7. ETL Implementation
 
@@ -423,3 +419,8 @@ Through this project, I developed practical experience in:
 
 - [GitHub Repository](https://github.com/Buthodev/data-engineering-capstone-april-may-2026_ntando-main)
 - [Project Files](https://github.com/Buthodev/data-engineering-capstone-april-may-2026_ntando-main/tree/main/Project%20Files)
+
+---
+
+**Author:** Ntando Ndwandwe 
+**GitHub:** [@Buthodev](https://github.com/Buthodev)
