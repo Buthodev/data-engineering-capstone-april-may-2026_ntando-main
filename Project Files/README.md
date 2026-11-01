@@ -1,139 +1,430 @@
-Customer 360 Data Engineering Pipeline
+# Customer 360 Data Warehouse | Data Engineering Capstone
 
-Overview
-This project implements a Customer 360 data pipeline using SQL Server. The pipeline loads source data into staging tables, cleans and standardises the data, removes duplicates, and then transforms and loads the prepared data into a dimensional data warehouse using a star schema.
+**A SQL Server and SSIS data engineering project focused on transforming raw banking activity data into a structured dimensional data warehouse for customer analytics and business intelligence.**
 
-The pipeline scripts are located in the Project Progress folder and should be executed in the order shown below.
+![SQL Server](https://img.shields.io/badge/SQL%20Server-Database-red)
+![SSIS](https://img.shields.io/badge/SSIS-ETL-blue)
+![T--SQL](https://img.shields.io/badge/T--SQL-Data%20Transformation-orange)
+![Data Engineering](https://img.shields.io/badge/Project-Data%20Engineering-green)
+![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
 
-Prerequisites
-Before running the pipeline, ensure that:
 
-SQL Server is installed and running.
 
-You have access to the correct SQL Server instance.
+## 1. Project Overview
 
-You have sufficient permissions to create databases, schemas, tables, and load data.
+Customer data in operational systems is often stored in denormalized structures, making it difficult to perform consistent reporting and obtain a unified view of customer activity.
 
-SQL Server Management Studio (SSMS) or another SQL Server-compatible query editor is available.
+This project focuses on building a **Customer 360 Data Warehouse** for a fictional retail banking environment.
 
-The required source data is available in the project.
+The objective is to transform a flat banking activity extract into a structured dimensional data warehouse using Microsoft SQL Server and SQL Server Integration Services (SSIS).
 
-Pipeline Execution
-Run the SQL scripts sequentially.
+The solution involves extracting and staging source data, applying data-cleaning and deduplication logic, developing dimension and fact tables, and preparing the resulting warehouse for analytical queries.
 
-1. Create the staging database
-Run:
+The project demonstrates practical data engineering concepts, including:
 
-01.create_staging_database.sql
+- ETL pipeline development.
+- Data cleaning and standardization.
+- Data deduplication.
+- Dimensional data modelling.
+- Star schema design.
+- Surrogate key management.
+- Fact and dimension loading.
+- SQL-based data analysis.
+- Data quality and validation.
 
-This creates the database used as the staging area for the source data.
+## Data Architecture
 
-2. Create staging tables
-Run:
+flowchart TD
+    A["Source Data<br/>Banking Activity Extract"] --> B["Data Extraction<br/>SQL Server Import"]
+    B --> C[("Staging Database<br/>Raw Activity Data")]
 
-02.create_staging_tables.sql
+    C --> D["Data Cleaning & Standardisation<br/>T-SQL Transformations"]
+    D --> E["Data Deduplication<br/>Quality Checks"]
+    E --> F["SSIS ETL Orchestration"]
 
-This creates the staging tables where the source data will initially be stored.
+    F --> G["Load Dimension Tables"]
+    F --> H["Load Fact Table"]
 
-3. Standardise column formatting
-Run:
+    subgraph DW["SQL Server Data Warehouse"]
+        G --> G1["dim_client"]
+        G --> G2["dim_account"]
+        G --> G3["dim_event"]
+        G --> G4["dim_location"]
+        G --> G5["dim_interaction"]
+        G --> G6["dim_flag"]
+        G --> G7["dim_channel"]
 
-03.standardise column formatting.sql
+        H --> I[("fact_account_activity")]
+        G1 --> I
+        G2 --> I
+        G3 --> I
+        G4 --> I
+        G5 --> I
+        G6 --> I
+        G7 --> I
+    end
 
-This step standardises the data, including column formatting and values, to ensure consistency before further processing.
+    I --> J["SQL Analytics & Reporting<br/>T-SQL Queries"]
+    J --> K["Customer 360 Insights<br/>Business Questions & Analysis"]
 
-4. Deduplicate staging data
-Run:
+### Star Schema
 
-04.deduplication of data in staging table.sql
+The following diagram illustrates the warehouse structure.
 
-This step identifies and removes duplicate records from the staging tables.
+![Customer 360 Star Schema](screenshots/Customer360Capstone%20Star%20Schema%20v3.png)
 
-5. Create the data warehouse
-Run:
+*The diagram illustrates the central fact table and its relationships with the seven dimensions.*
 
-05.create data warehouse database and schema.sql
 
-This creates the data warehouse database and the required database schema.
 
-6. Create data warehouse tables
-Run:
+## 2. Business Problem
 
-06.create dw tables.sql
+The source banking activity data contains customer information, account details, transactions, geographical information and customer interactions within a denormalized dataset.
 
-This creates the dimension and fact tables required for the Customer 360 star schema.
+This structure presents several challenges:
 
-7. Load the data warehouse
-Run:
+- Customer information may be repeated across multiple records.
+- Inconsistent formatting can affect data accuracy.
+- Duplicate records can distort analytical results.
+- Data is not structured optimally for analytical reporting.
+- Customer and account activity can be difficult to analyse across business dimensions.
 
-07.load data from staging table into dim and fact table.sql
+The project addresses these challenges by transforming the source data into a dimensional warehouse that provides a more organized foundation for customer analytics.
 
-This transforms the prepared staging data and loads it into the appropriate dimension and fact tables in the data warehouse.
+## 3. Project Objectives
 
-8. Run validation and analysis queries
-After the warehouse load has completed successfully, run:
+The main objectives are to:
 
-Questions and Answers.sql
+1. Extract and stage the source banking activity data.
+2. Standardize inconsistent data formats.
+3. Identify and handle duplicate records.
+4. Design a dimensional warehouse using a star schema.
+5. Create fact and dimension tables with appropriate keys and relationships.
+6. Develop an SSIS ETL workflow to orchestrate data loading.
+7. Use SQL to answer business questions relating to customer and account activity.
+8. Establish data quality checks to improve the reliability of analytical outputs.
 
-This script contains queries used to validate and analyse the Customer 360 data stored in the warehouse.
+## 4. Technology Stack
 
-Execution Order
-The complete pipeline should be executed in the following order:
+| Technology | Purpose |
+|---|---|
+| Microsoft SQL Server | Database management and warehouse storage |
+| SQL Server Management Studio (SSMS) | SQL development and database administration |
+| SQL Server Integration Services (SSIS) | ETL development and workflow orchestration |
+| T-SQL | Data extraction, transformation, loading and analysis |
+| SQL Server Data Tools (SSDT) | SSIS package development |
 
-01 → 02 → 03 → 04 → 05 → 06 → 07 → Questions and Answers
+## 5. Solution Architecture
 
-Following this order is important because each stage depends on objects or data created by the preceding stage.
+The project follows an ETL-based data warehousing approach.
 
-Pipeline Flow
-Source Data
-     │
-     ▼
-Staging Database
-     │
-     ▼
-Staging Tables
-     │
-     ▼
-Standardisation
-     │
-     ▼
-Deduplication
-     │
-     ▼
-Data Warehouse
-     │
-     ▼
-Dimension & Fact Tables
-     │
-     ▼
-Validation & Analysis
+### High-level workflow
 
-Expected Outcome
-At the end of the pipeline:
+```text
+       SOURCE DATA
+    Banking Activity Extract
+             |
+             v
+     DATA EXTRACTION
+             |
+             v
+      STAGING DATABASE
+             |
+             v
+    DATA TRANSFORMATION
+   - Standardization
+   - Data cleaning
+   - Deduplication
+   - Data validation
+             |
+             v
+      DIMENSION LOADING
+   - Client
+   - Account
+   - Event
+   - Location
+   - Interaction
+   - Flag
+   - Channel
+             |
+             v
+        FACT LOADING
+    Fact Account Activity
+             |
+             v
+    CUSTOMER 360 WAREHOUSE
+             |
+             v
+       SQL ANALYTICS
+             |
+             v
+     BUSINESS INSIGHTS
+```
 
-Source data has been loaded into the staging environment.
+The SSIS master package coordinates the ETL workflow, while SQL scripts implement database creation, transformations, dimensional loading and analytical queries.
 
-Data has been standardised and cleaned.
+## 6. Data Warehouse Design
 
-Duplicate records have been removed.
+The warehouse follows a dimensional modelling approach using a central fact table connected to descriptive dimension tables.
 
-The Customer 360 data warehouse has been created.
+### Fact Table
 
-Dimension and fact tables have been populated.
+**fact_account_activity**
 
-The resulting warehouse can be queried using Questions and Answers.sql.
+The central fact table stores account activity information and connects the activity records to their associated dimensions through surrogate keys.
 
-Troubleshooting
-If a script fails:
+The fact table is designed to support analytical queries involving customer activity, account information and other business attributes.
 
-Check that the previous script completed successfully.
+The precise grain of the fact table should be interpreted according to the source activity records and documented business rules.
 
-Confirm that the required database, schema, or tables exist.
+### Dimension Tables
 
-Verify that you are connected to the correct SQL Server instance.
+| Dimension | Description |
+|---|---|
+| dim_client | Customer demographic and identifying information |
+| dim_account | Account-related attributes |
+| dim_event | Event-related attributes |
+| dim_location | Geographical information |
+| dim_interaction | Customer interaction attributes |
+| dim_flag | Activity or customer flag attributes |
+| dim_channel | Channel-related attributes |
 
-Check that your account has the required permissions.
 
-Review the SQL Server error message before proceeding to the next script.
+## 7. ETL Pipeline
 
-Important: Do not skip pipeline stages unless you have confirmed that all required databases, tables, and data already exist.
+The ETL process is divided into several stages.
+
+### Stage 1: Source Data Extraction
+
+The banking activity extract serves as the source dataset.
+
+The data is imported into the SQL Server staging environment before transformation.
+
+### Stage 2: Data Staging
+
+A staging database is used to hold the source data before it is transformed and loaded into the dimensional warehouse.
+
+This separates the initial source data from the analytical data model.
+
+### Stage 3: Data Cleaning and Standardization
+
+SQL transformations are applied to improve data consistency.
+
+Examples include:
+
+- Removing leading and trailing whitespace.
+- Standardizing text formatting.
+- Converting values into appropriate formats.
+- Handling missing values according to applicable rules.
+- Preparing records for dimensional loading.
+
+### Stage 4: Deduplication
+
+Duplicate records are identified using selected business attributes.
+
+The objective is to reduce duplicate data while preserving legitimate customer and account activity.
+
+Deduplication rules should be aligned with the intended grain of the fact table.
+
+### Stage 5: Dimension Loading
+
+The dimension tables are populated from the cleaned staging data.
+
+Surrogate keys are used to establish relationships between the dimensions and the fact table.
+
+### Stage 6: Fact Loading
+
+The fact table is populated by resolving the relevant dimension keys and loading the corresponding activity records.
+
+### Stage 7: ETL Orchestration
+
+An SSIS master package coordinates the execution of the ETL workflow.
+
+This provides a structured approach to executing the individual loading and transformation operations.
+
+## 8. Analytical SQL and Business Questions
+
+SQL queries are developed to demonstrate how the dimensional warehouse can support business analysis.
+
+The analytical questions include:
+
+- How many customers are represented in each geographical province?
+- What is the distribution of customers across different age groups?
+- How many customer signups occur each month?
+- Which banking products have the highest customer activity?
+- What are the account activity trends across different product categories?
+- Which customers have activity across multiple product categories?
+- How does customer activity vary across different channels?
+
+These queries demonstrate the application of SQL joins, aggregations, grouping, common table expressions, date functions and window functions where appropriate.
+
+## 9. Data Quality and Validation
+
+Data quality is an important consideration when transforming raw operational data into an analytical warehouse.
+
+The project considers the following validation areas:
+
+| Validation area | Purpose |
+|---|---|
+| Completeness | Identify missing or null values |
+| Consistency | Check standardized formats |
+| Uniqueness | Identify duplicate business records |
+| Validity | Identify invalid or unexpected values |
+| Referential integrity | Validate fact-to-dimension relationships |
+| Reconciliation | Compare source and warehouse record counts |
+
+Validation results should be recorded alongside the ETL execution results.
+
+### Validation Results
+
+| Metric | Result |
+|---|---|
+| Source records | [Insert actual count] |
+| Records staged | [Insert actual count] |
+| Duplicate records identified | [Insert actual count] |
+| Rejected records | [Insert actual count] |
+| Records loaded into fact table | [Insert actual count] |
+| Unresolved dimension keys | [Insert actual count] |
+
+*Replace these placeholders with results from a verified pipeline execution.*
+
+## 10. Repository Structure
+
+```text
+customer-360-data-warehouse/
+│
+├── README.md
+│
+├── SQL Scripts/
+│   ├── Database Creation
+│   ├── Data Extraction
+│   ├── Data Standardization
+│   ├── Data Deduplication
+│   ├── Dimension Creation
+│   ├── Dimension Loading
+│   ├── Fact Loading
+│   └── Questions and Answers
+│
+├── SSIS/
+│   └── Customer 360 SSIS Project
+│
+├── Screenshots/
+│   ├── Star Schema
+│   ├── SQL Query Results
+│   ├── Data Transformation
+│   └── ETL Execution
+│
+└── Documentation/
+    ├── Data Quality
+    └── Project Documentation
+
+
+
+## 11. How to Run the Project
+
+### Prerequisites
+
+Before executing the project, ensure you have:
+
+- Microsoft SQL Server installed and running.
+- SQL Server Management Studio (SSMS).
+- SQL Server Integration Services development tools.
+- Visual Studio with the appropriate SSIS extension.
+- Access to the source banking activity extract.
+
+### Execution Steps
+
+**Step 1: Clone the repository**
+
+```bash
+git clone https://github.com/Buthodev/data-engineering-capstone-april-may-2026_ntando-main.git
+```
+
+**Step 2: Open SQL Server Management Studio**
+
+Connect to your SQL Server instance.
+
+**Step 3: Prepare the databases**
+
+Execute the database creation scripts in the documented order to create the staging and warehouse databases.
+
+**Step 4: Import the source dataset**
+
+Import the banking activity extract into the expected staging source table.
+
+Verify that the table and column names match those referenced in the SQL scripts.
+
+**Step 5: Execute the transformation scripts**
+
+Run the data standardization and deduplication scripts.
+
+**Step 6: Create and populate the warehouse**
+
+Execute the dimension creation and loading scripts before loading the fact table.
+
+**Step 7: Execute the SSIS project**
+
+Open the SSIS solution in Visual Studio, configure the database connection managers and execute the master package.
+
+**Step 8: Validate the warehouse**
+
+Run the data quality checks and analytical SQL queries to verify the loaded data.
+
+*Note: Confirm the exact execution order and SSIS package configuration against the final implementation before treating these instructions as a verified deployment guide.*
+
+## 12. Screenshots and Implementation Evidence
+
+Screenshots are included in the repository to demonstrate the SQL development process, dimensional warehouse design, data transformations and ETL execution.
+
+The evidence should include:
+
+- Star schema and database relationships.
+- SQL transformation queries.
+- Dimension and fact table outputs.
+- SSIS control flow.
+- Successful ETL execution.
+- Analytical query results.
+- Data quality and reconciliation results.
+
+## 13. Challenges and Engineering Considerations
+
+The project provides practical exposure to several data engineering challenges:
+
+- Working with denormalized source data.
+- Handling inconsistent customer information.
+- Designing meaningful deduplication rules.
+- Maintaining relationships between fact and dimension tables.
+- Managing surrogate keys during warehouse loading.
+- Ensuring analytical queries produce accurate results.
+- Making ETL operations repeatable and reliable.
+
+These considerations highlight the importance of data quality, dimensional modelling and controlled data movement in building analytical data platforms.
+
+## 14. Future Improvements
+
+Potential extensions to strengthen the warehouse include:
+
+- Implementing incremental ETL loading.
+- Introducing Slowly Changing Dimensions (SCD Type 2) for historical customer tracking.
+- Adding a dedicated date dimension.
+- Implementing automated data quality tests.
+- Adding detailed ETL execution and error logging.
+- Improving pipeline recovery and rerun handling.
+- Introducing a Power BI dashboard for customer analytics.
+- Evaluating query performance and indexing strategies.
+- Exploring cloud-based data warehousing and orchestration.
+
+## 15. Project Outcomes and Learning
+
+This project demonstrates the practical application of data engineering concepts using Microsoft SQL Server and SSIS.
+
+It provides experience in:
+
+- Developing ETL workflows.
+- Transforming raw operational data.
+- Designing dimensional data models.
+- Implementing fact and dimension tables.
+- Writing analytical SQL queries.
+- Understanding data quality and warehouse reliability.
+
+It also provides a foundation for further development in enterprise data warehousing, analytics engineering and cloud-based data engineering.
